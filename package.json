@@ -2,9 +2,10 @@
   "name": "42wizard",
   "version": "1.0.0",
   "description": "Un BOT Discord relié à l'API de l'école 42 pour offrir des outils aux étudiants du campus de Paris.",
-  "main": "42Wizard.js",
+  "main": "client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 start --name=\"42Wizard\" client.js",
+    "restart": "pm2 flush 42Wizard && pm2 reload 42Wizard && pm2 logs 42Wizard"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/MurasakiNX/42Wizard/issues"
   },
-  "homepage": "https://github.com/MurasakiNX/42Wizard#readme"
+  "homepage": "https://github.com/MurasakiNX/42Wizard#readme",
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "lodash": "^4.17.21"
+  }
 }
