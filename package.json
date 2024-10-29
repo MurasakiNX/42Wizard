@@ -1,0 +1,22 @@
+{
+  "name": "42wizard",
+  "version": "1.0.0",
+  "description": "Un BOT Discord relié à l'API de l'école 42 pour offrir des outils aux étudiants du campus de Paris.",
+  "main": "42Wizard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MurasakiNX/42Wizard.git"
+  },
+  "keywords": [
+    "42"
+  ],
+  "author": "MurasakiNX (mel-habi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MurasakiNX/42Wizard/issues"
+  },
+  "homepage": "https://github.com/MurasakiNX/42Wizard#readme"
+}
