@@ -4,8 +4,8 @@
  */
 async function variables(client) {
     client.commands = [];
-    client.emotes = {};
-    client.owners = [];
+    client.emotes = {no_emote: '<:no_emote:1300951130389479508>'};
+    client.owners = ['562660439360667648'];
 
     client.exportsChannelId = '';
 

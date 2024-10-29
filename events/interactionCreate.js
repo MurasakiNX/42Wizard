@@ -44,19 +44,19 @@ const interactionCreate = new Event({
     const cooldownName = commandName.split(' ').join('_');
 
     if (guildId !== 'DM' && dmOnly) {
-      return await interaction.sendEmbed(client.createEmbed('Pour des raisons de sécurité, je ne peux pas vous laisser effectuer cette commande en dehors des messages privés...', {emote: 'engarde', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed('Pour des raisons de sécurité, je ne peux pas vous laisser effectuer cette commande en dehors des messages privés...', {emote: 'zero', type: 'warning'}));
     } else if (!client.isClientOwner(interaction.user.id)) {
       if (ownerOnly) {
-        return await interaction.sendEmbed(client.createEmbed('Cette commande ne vous est d\'aucune utilité...', {emote: 'engarde', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('Cette commande ne vous est d\'aucune utilité...', {emote: 'zero', type: 'warning'}));
       } else if (client.maintenance) {
-        return await interaction.sendEmbed(client.createEmbed('Une opération de maintenance est en cours, veuillez patienter que celle-ci se termine, je suis sincèrement désolé pour la gêne occasionnée...', {emote: 'engarde', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('Une opération de maintenance est en cours, veuillez patienter que celle-ci se termine, je suis sincèrement désolé pour la gêne occasionnée...', {emote: 'zero', type: 'warning'}));
       };
     };
 
     const userCooldown = client.selectIntoDatabase('Cooldowns/Discord', {commandName: cooldownName, userId});
 
     if (userCooldown && !userCooldown.finished) {
-      return await interaction.sendEmbed(client.createEmbed('Vous êtes déjà en train d\'utiliser cette commande, veuillez patienter que celle-ci se termine avant de recommencer.', {emote: 'sourire', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed('Vous êtes déjà en train d\'utiliser cette commande, veuillez patienter que celle-ci se termine avant de recommencer.', {emote: 'zero', type: 'warning'}));
     };
 
     if (userCooldown) {
@@ -71,7 +71,7 @@ const interactionCreate = new Event({
 
     await selectedCommand.run(client, interaction).catch(async (err) => {
       console.error(`❌ [DISCORD] Erreur avec la commande ${commandName}: ${err}.`);
-      return await interaction.sendEmbed(client.createEmbed(`Je ne suis malheureusement pas parvenue à exécuter complètement la commande \`${commandName}\`...`, {emote: 'boude', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed(`Je ne suis malheureusement pas parvenue à exécuter complètement la commande \`${commandName}\`...`, {emote: 'minus_fortytwo', type: 'warning'}));
     });
 
     client.updateIntoDatabase('Cooldowns/Discord', {finished: 1}, {commandName: cooldownName, userId});

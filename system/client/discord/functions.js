@@ -121,7 +121,7 @@ async function functions(client) {
 
       collector.on('collect', async (i) => {
         if (i.user.id !== interaction.user.id) {
-          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'engarde', type: 'warning'})], ephemeral: true});
+          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
         collector.stop(i.customId.slice(now.length + 1));
       });
@@ -134,7 +134,7 @@ async function functions(client) {
           await interaction.deleteReply({components: []}).catch(() => {});
           resolve(false);
         };
-        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'frousse', type: 'warning'}));
+        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'minus_fortytwo', type: 'warning'}));
         return resolve(false);
       });
     });
@@ -154,13 +154,13 @@ async function functions(client) {
                 return element;
               })]));
 
-      const message = await interaction.editReply({embeds: [client.createEmbed(`Veuillez faire votre choix dans la liste ci-dessous \`(${list.length} résultats)\`, vous pouvez annuler en choisissant l'option d'annulation *ou en attendant une minute*.`, {emote: 'sourire'})], components: [selection]});
+      const message = await interaction.editReply({embeds: [client.createEmbed(`Veuillez faire votre choix dans la liste ci-dessous \`(${list.length} résultats)\`, vous pouvez annuler en choisissant l'option d'annulation *ou en attendant une minute*.`, {emote: 'hundred'})], components: [selection]});
       const filter = (i) => i.customId === `${now}_selection`;
       const collector = message.createMessageComponentCollector({filter, time: 60000});
 
       collector.on('collect', async (i) => {
         if (i.user.id !== interaction.user.id) {
-          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'engarde', type: 'warning'})], ephemeral: true});
+          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
         collector.stop(i.values[0]);
       });
@@ -173,7 +173,7 @@ async function functions(client) {
           await interaction.deleteReply({components: []}).catch(() => {});
           resolve('cancel');
         };
-        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'frousse', type: 'warning'}));
+        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'minus_fortytwo', type: 'warning'}));
         return resolve('cancel');
       });
     });
@@ -341,9 +341,9 @@ async function functions(client) {
         const user = await client.fetchUser(userId);
         if (user) {
           const displayName = user.globalName || user.username;
-          return await interaction.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${displayName}.`, {emote: 'engarde', type: 'warning'})], ephemeral: true});
+          return await interaction.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
-        return await interaction.reply({embeds: [client.createEmbed('Seule la personne qui a effectuée cette commande peut naviguer entre les pages.', {emote: 'engarde', type: 'warning'})], ephemeral: true});
+        return await interaction.reply({embeds: [client.createEmbed('Seule la personne qui a effectuée cette commande peut naviguer entre les pages.', {emote: 'zero', type: 'warning'})], ephemeral: true});
       };
 
       const pages = JSON.parse(PagesEmbedsDB.pages);
