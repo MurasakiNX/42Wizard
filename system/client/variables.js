@@ -4,6 +4,7 @@
  */
 async function variables(client) {
     client.maintenance = false;
+    client.accessToken = '';
     await require('./discord/variables')(client);
 };
 

@@ -3,7 +3,7 @@ Structures:
 - Client:
 CREATE TABLE FortyTwo(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    secretData TEXT NOT NULL,
+    accessToken TEXT NOT NULL,
     lastUpdate INTEGER NOT NULL
 );
 
