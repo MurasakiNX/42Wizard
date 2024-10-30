@@ -81,7 +81,6 @@ async function initAPI(client) {
                     .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
     
                 await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
-                console.log(`[🔒] Lock détecté pour userId: ${fortyTwoUserId} !`);
             } else {
                 if (LockSystemDB && LockSystemDB.status === 'unlocked') {
                     return res.status(401).send('Utilisateur déjà détecté comme unlocked.\n');
@@ -93,7 +92,6 @@ async function initAPI(client) {
                         unlockedAt: Date.now(),
                     }, {fortyTwoUserId});
                 };
-                console.log(`[🔓] Unlock détecté pour userId: ${fortyTwoUserId} !`);
             };
     
             res.status(200).send('OK\n');
