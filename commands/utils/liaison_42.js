@@ -66,7 +66,7 @@ const Liaison42 = new DiscordCommand({
                 const userData = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId});
                 const informationsEmbed = client.baseEmbed()
                     .setTitle(`❓ Informations du profil 42 ${userData.login}`)
-                    .setDescription(`- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\`\n- Script de détection:\n\`\`\`sh\n${script}\`\`\`\n- Étapes:\n  - **Créez** un dossier \`.42Wizard\` dans votre \`home\` et placez le code ci-dessus dans un fichier \`script.sh\`.\n  - **Créez** un fichier \`userKey\` dans le dossier \`.42Wizard\` et inscrivez-y la clé d'identification.\n\n- **Exécutez** ce script avec ce que vous voulez (Minishell ???).`)
+                    .setDescription(`- Étapes:\n  - **Créez** un dossier \`.42Wizard\` dans votre \`home\` et placez le code ci-dessous dans un fichier \`script.sh\`.\n  - **Créez** un fichier \`userKey\` dans le dossier \`.42Wizard\` et inscrivez-y la clé d'identification.\n\n- **Exécutez** ce script avec ce que vous voulez (Minishell ???).\n- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\`\n- Script de détection:\n\`\`\`sh\n${script}\`\`\`\n`)
                     .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1301168349425700966/image.png');
 
                 await interaction.sendEmbed(informationsEmbed);
@@ -97,6 +97,7 @@ const Liaison42 = new DiscordCommand({
                 if (!validation) return;
 
                 await interaction.sendEmbed(client.createEmbed('Vérification en cours...', {emote: 'chargement'}));
+                await client.waitForTimeout(500);
 
                 const data = await fetch(`https://friends42.fr/getuser/${selectedLogin}`, {
                     headers: {
