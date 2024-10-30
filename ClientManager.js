@@ -44,7 +44,7 @@ CREATE TABLE Sync(
     syncKey TEXT NOT NULL
 );
 */
-""
+
 require('dotenv').config();
 const {Client, Events, GatewayIntentBits} = require('discord.js');
 const client = new Client({intents: [GatewayIntentBits.Guilds]});
