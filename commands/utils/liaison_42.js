@@ -83,7 +83,7 @@ const Liaison42 = new DiscordCommand({
                     syncKey
                 });
 
-                await interaction.sendEmbed(client.createEmbed('Votre compte Discord a bien été relié avec votre compte 42.', {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed('Votre compte Discord a bien été relié avec votre compte 42, vous pouvez remettre votre biographie d\'origine.', {emote: 'hundred', type: 'success'}));
                 break;
             };
 
