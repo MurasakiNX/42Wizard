@@ -12,7 +12,7 @@ async function updateClustersData(client) {
     const now = Date.now();
     const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
 
-    if (now > (FortyTwoDB.lastUpdate + 30000)) {
+    if (now > (FortyTwoDB.lastUpdate + 42000)) {
         client.updateIntoDatabase('42/Clusters', {lastUpdate: now}, {id: 1});
         const newData = await client.getParisCampusLocations();
         if (!newData.length) {
