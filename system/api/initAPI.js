@@ -51,7 +51,7 @@ async function initAPI(client) {
         const now = Date.now();
 
         if (status === 'locked') {
-            if (LockSystemDB.status === 'locked') {
+            if (LockSystemDB && LockSystemDB.status === 'locked') {
                 return res.status(401).send('Utilisateur déjà détecté comme locked.');
             } else if (LockSystemDB) {
                 client.updateIntoDatabase('42/LockSystem', {
@@ -75,12 +75,12 @@ async function initAPI(client) {
             const lockedEmbed = client.baseEmbed()
                 .setTitle('🔒 Notification de détection de lock sur un poste à 42')
                 .setThumbnail(client.userAvatar)
-                .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 4860, 'R')}\n\n*Vous receverez automatiquement une notification **5 minutes avant la possibilité de delog.**`);
+                .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 4860, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
 
             await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
             console.log(`[🔒] Lock détecté pour userId: ${fortyTwoUserId} !`);
         } else {
-            if (LockSystemDB.status === 'unlocked') {
+            if (LockSystemDB && LockSystemDB.status === 'unlocked') {
                 return res.status(401).send('Utilisateur déjà détecté comme unlocked.');
             } else if ((now - LockSystemDB.lockedAt) < 2000) {
                 return res.status(401).send('Très rapide pour unlock, on essaie de spam l\'API ?');
