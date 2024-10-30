@@ -1,3 +1,4 @@
+require('dotenv').config();
 const {DiscordCommand} = require('../../system/structures/command');
 const crypto = require('crypto');
 
@@ -53,16 +54,25 @@ const Liaison42 = new DiscordCommand({
 
                 await interaction.sendEmbed(client.createEmbed('Vérification en cours...', {emote: 'chargement'}));
 
-                const data = await fetch(`https://friends42.fr/getuser/${selectedLogin}`);
+                const data = await fetch(`https://friends42.fr/getuser/${selectedLogin}`, {
+                    headers: {
+                        cookie: `token=${process.env.FRIENDS_TOKEN}`
+                    }
+                });
+
                 if (!data.ok) {
                     return await interaction.sendEmbed(client.createEmbed('Je ne suis malheureusement pas parvenu à effectuer les vérifications...', {emote: 'zero', type: 'warning'}));
                 };
 
-                const jsonData = await data.json();
-                if (!jsonData.recit || !jsonData.recit.includes(userId)) {
-                    return await interaction.sendEmbed(client.createEmbed('Ce compte 42 ne comporte pas la signature dans sa biographie...', {emote: 'zero', type: 'warning'}));
+                try {
+                    const jsonData = await data.json();
+                    if (!jsonData.recit || !jsonData.recit.includes(userId)) {
+                        return await interaction.sendEmbed(client.createEmbed('Ce compte 42 ne comporte pas la signature dans sa biographie...', {emote: 'zero', type: 'warning'}));
+                    };
+                } catch {
+                    return await interaction.sendEmbed(client.createEmbed('Je ne suis malheureusement pas parvenu à effectuer les vérifications...', {emote: 'zero', type: 'warning'}));
                 };
-
+               
                 client.insertIntoDatabase('42/Sync', {
                     discordUserId: userId,
                     fortyTwoUserId: userData.userId,
