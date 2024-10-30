@@ -5,7 +5,6 @@ const interactionCreate = new Event({
   name: Events.InteractionCreate,
   run: async (client, interaction) => {
     const userId = interaction.user.id;
-    const guildId = interaction.guild?.id || 'DM';
 
     interaction.userAvatar = client.getAvatar(userId);
     interaction.displayName = interaction.user.globalName || interaction.user.username;
@@ -35,7 +34,7 @@ const interactionCreate = new Event({
     const selectedCommand = client.commands.find((command) => command.name === interaction.commandName);
     if (!selectedCommand) return;
 
-    const {dmOnly, ownerOnly, ephemeral} = selectedCommand;
+    const {ownerOnly, ephemeral} = selectedCommand;
     await interaction.deferReply({ephemeral});
 
     const subcommandGroup = interaction.options._group;
@@ -43,9 +42,7 @@ const interactionCreate = new Event({
     const commandName = `${selectedCommand.name}${subcommandGroup ? ' ' + subcommandGroup : ''}${subcommand ? ' ' + subcommand : ''}`;
     const cooldownName = commandName.split(' ').join('_');
 
-    if (guildId !== 'DM' && dmOnly) {
-      return await interaction.sendEmbed(client.createEmbed('Pour des raisons de sécurité, je ne peux pas vous laisser effectuer cette commande en dehors des messages privés...', {emote: 'zero', type: 'warning'}));
-    } else if (!client.isClientOwner(interaction.user.id)) {
+    if (!client.isClientOwner(interaction.user.id)) {
       if (ownerOnly) {
         return await interaction.sendEmbed(client.createEmbed('Cette commande ne vous est d\'aucune utilité...', {emote: 'zero', type: 'warning'}));
       } else if (client.maintenance) {

@@ -36,7 +36,7 @@ const Clusters = new DiscordCommand({
       };
     };
 
-    return await client.createPagesSystem(interaction, pages, 'selection', false);
+    return await client.createPagesSystem(interaction, pages, 'selection');
   },
 });
 

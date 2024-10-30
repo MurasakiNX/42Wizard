@@ -179,8 +179,8 @@ async function functions(client) {
     });
   };
 
-  client.createPagesSystem = async (interaction, pages, type, allowEveryone) => {
-    const userId = interaction.user.id + (allowEveryone ? '_everyone' : '');
+  client.createPagesSystem = async (interaction, pages, type) => {
+    const userId = interaction.user.id;
     pages.map((page, i) => {
       const pageIndex = ` (Page n°${i+1}/${pages.length})`;
       page.map((level, i) => {
@@ -333,11 +333,11 @@ async function functions(client) {
         .setStyle(ButtonStyle.Secondary);
 
     if (PagesEmbedsDB) {
-      const [userId, allowEveryone] = PagesEmbedsDB.userId.split('_');
+      const userId = PagesEmbedsDB.userId;
       const customId = interaction.customId;
       const selectedPage = customId === 'selection' ? interaction.values[0] : '';
 
-      if (interaction.user.id !== userId && (!allowEveryone || customId === 'delete' || selectedPage === 'delete')) {
+      if (interaction.user.id !== userId) {
         const user = await client.fetchUser(userId);
         if (user) {
           const displayName = user.globalName || user.username;
