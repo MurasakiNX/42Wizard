@@ -33,7 +33,9 @@ CREATE TABLE Users(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     userId TEXT NOT NULL,
     login TEXT NOT NULL,
-    image TEXT NOT NULL
+    image TEXT NOT NULL,
+    delogTimes INTEGER NOT NULL,
+    gotDeloggedTimes INTEGER NOT NULL
 );
 
 CREATE TABLE Sync(

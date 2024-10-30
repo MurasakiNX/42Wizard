@@ -1,3 +1,7 @@
+const moment = require('moment');
+require('moment-precise-range-plugin');
+moment.locale('fr');
+
 /**
  * Vérifie l'état des personnes qui ont un PC lock.
  * @param {DiscordClient} client Le client Discord.
@@ -34,10 +38,33 @@ async function checkLockedUsers(client) {
 						await client.sendMessage(dmChannelId, reminderEmbed);
 					};
 				} else {
+					let delogTimes = 1;
+					const deloggerUserDB = client.selectIntoDatabase('42/Users', {userId: clusterData.user.id});
+					if (deloggerUserDB) {
+						delogTimes = deloggerUserDB.delogTimes + 1;
+						client.updateIntoDatabase('42/Users', {delogTimes}, {userId: clusterData.user.id});
+					};
+
+					const gotDeloggedTimes = UserDB.gotDeloggedTimes + 1;
+					client.updateIntoDatabase('42/Users', {gotDeloggedTimes}, {userId: fortyTwoUserId});
+
+					const elapsedAfter42 = elapsed - 2520000;
+					const formattedElapsed = moment.preciseDiff(0, elapsedAfter42);
+					let delogGIF = 'https://cdn.discordapp.com/attachments/1300993150248157267/1301251159968972902/default.gif';
+
+					if (elapsedAfter42 < 180000) {
+						delogGIF = 'https://cdn.discordapp.com/attachments/1300993150248157267/1301249830823264396/180000.gif';
+					} else if (elapsedAfter42 < 360000) {
+						delogGIF = 'https://cdn.discordapp.com/attachments/1300993150248157267/1301250136659460186/360000.gif';
+					} else if (elapsedAfter42 < 1080000) {
+						delogGIF = 'https://cdn.discordapp.com/attachments/1300993150248157267/1301250975134257344/1080000.gif';
+					};
+
 					const deloggedEmbed = client.baseEmbed()
 						.setTitle('🔓 Notification de delog manuel sur votre poste')
 						.setThumbnail(clusterData.user.image)
-						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Login du delogger: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**`);
+						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Login du delogger: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delog après **${formattedElapsed}**\n\n- Nombre de delogs du delogger: **${delogTimes}**\n- Nombre de delogs que vous avez reçus: **${gotDeloggedTimes}**`)
+						.setImage(delogGIF);
 
 					client.updateIntoDatabase('42/LockSystem', {
 						status: 'unlocked',

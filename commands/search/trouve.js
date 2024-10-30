@@ -18,7 +18,7 @@ const Trouve = new DiscordCommand({
 
         const trouveEmbed = client.baseEmbed()
             .setThumbnail(UserDB.image)
-            .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n- Position(s):${selectedClusters.length ? ('\n' + selectedClusters.map((selectedCluster) => `  - **[${selectedCluster.host}](https://meta.intra.42.fr/clusters#${selectedCluster.host})**`).join('\n')) : ' **❌ Connecté(e) nulle part**'}`);
+            .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n- Position(s):${selectedClusters.length ? ('\n' + selectedClusters.map((selectedCluster) => `  - **[${selectedCluster.host}](https://meta.intra.42.fr/clusters#${selectedCluster.host})**`).join('\n')) : ' **❌ Connecté(e) nulle part**'}\n\n- A delog **${UserDB.delogTimes}** fois.\n- A été delog **${UserDB.gotDeloggedTimes}**.`);
 
         return await interaction.sendEmbed(trouveEmbed);
     },

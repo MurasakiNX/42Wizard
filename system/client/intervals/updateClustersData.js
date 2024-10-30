@@ -24,7 +24,7 @@ async function updateClustersData(client) {
             const {id, login, image} = user;
             const userData = client.selectIntoDatabase('42/Users', {userId: id});
             if (!userData) {
-                client.insertIntoDatabase('42/Users', {userId: id, login, image: image});
+                client.insertIntoDatabase('42/Users', {userId: id, login, image: image, delogTimes: 0, gotDeloggedTimes: 0});
             } else if (userData.image !== user.image) {
                 client.updateIntoDatabase('42/Users', {login: login, image: image}, {userId: id});
             };
