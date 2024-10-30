@@ -23,7 +23,7 @@ const Liaison42 = new DiscordCommand({
                 const userData = client.selectIntoDatabase('42/Users', {login: selectedLogin});
                 const informationsEmbed = client.baseEmbed()
                     .setTitle(`❓ Informations du profil 42 ${userData.login}`)
-                    .setDescription(`- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\``)
+                    .setDescription(`- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\``);
 
                 await interaction.sendEmbed(informationsEmbed);
                 break;

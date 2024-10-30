@@ -43,6 +43,16 @@ CREATE TABLE Sync(
     dmChannelId TEXT NOT NULL,
     syncKey TEXT NOT NULL
 );
+
+CREATE TABLE LockSystem(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    fortyTwoUserId TEXT NOT NULL,
+    host TEXT NOT NULL,
+    status TEXT NOT NULL,
+    lockedAt INTEGER NOT NULL,
+    unlockedAt INTEGER NOT NULL,
+    fiveMinutesReminded INTEGER NOT NULL
+);
 */
 
 require('dotenv').config();

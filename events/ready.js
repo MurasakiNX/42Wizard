@@ -2,6 +2,7 @@ const Event = require('../system/structures/event');
 const {Events, REST, Routes} = require('discord.js');
 const initEmotes = require('../system/client/discord/initEmotes');
 const getFiles = require('../system/getFiles');
+const initAPI = require('../system/api/initAPI');
 
 const Ready = new Event({
   name: Events.ClientReady,
@@ -34,6 +35,7 @@ const Ready = new Event({
       executeInterval(interval, client, 500);
     };
 
+    await initAPI(client);
     console.log(`✅ [DISCORD] ${client.user.tag} est actuellement en ligne !`);
   },
 });
