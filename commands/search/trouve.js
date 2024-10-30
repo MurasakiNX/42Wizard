@@ -14,9 +14,7 @@ const Trouve = new DiscordCommand({
 
         const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
         const data = JSON.parse(FortyTwoDB.clustersData);
-        const selectedClusters = data.filter((d) => d.id === UserDB.userId);
-
-        
+        const selectedClusters = data.filter((d) => d.user.id === UserDB.userId);
 
         const trouveEmbed = client.baseEmbed()
             .setThumbnail(UserDB.image)

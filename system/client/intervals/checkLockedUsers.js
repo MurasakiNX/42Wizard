@@ -20,7 +20,7 @@ async function checkLockedUsers(client) {
 			const dmChannelId = FortyTwoSyncDB.dmChannelId;
 
 			if (clusterData) {
-				if (UserDB.login == clusterData.user.login) {
+				if (UserDB.userId == clusterData.user.id) {
 					if (!lockedUser.fiveMinutesReminded && elapsed >= 2220000) {
 						const reminderEmbed = client.baseEmbed()
 							.setTitle('🔒 Notification de rappel de reconnexion sur un poste à 42 5 minutes avant la possibilité de delog')
@@ -35,7 +35,7 @@ async function checkLockedUsers(client) {
 					};
 				} else {
 					const deloggedEmbed = client.baseEmbed()
-						.setTitle('🔒 Notification de delog manuel sur votre poste')
+						.setTitle('🔓 Notification de delog manuel sur votre poste')
 						.setThumbnail(clusterData.user.image)
 						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Login du delogger: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**`);
 
@@ -54,13 +54,13 @@ async function checkLockedUsers(client) {
 
 				if (elapsed >= 5040000) {
 					const autoDeloggedEmbed = client.baseEmbed()
-						.setTitle('🔒 Notification de delog automatique sur votre poste (1 heure 24 minutes écoulées)')
+						.setTitle('🔓 Notification de delog automatique sur votre poste (1 heure 24 minutes écoulées)')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 					await client.sendMessage(dmChannelId, autoDeloggedEmbed);
 				} else if (elapsed >= 2520000) {
 					const deloggedEmbed = client.baseEmbed()
-						.setTitle('🔒 Notification de delog manuel sur votre poste (Sans reconnexion)')
+						.setTitle('🔓 Notification de delog manuel sur votre poste (Sans reconnexion)')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 					await client.sendMessage(dmChannelId, deloggedEmbed);

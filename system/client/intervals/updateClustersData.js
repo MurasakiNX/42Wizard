@@ -20,12 +20,13 @@ async function updateClustersData(client) {
             return;
         };
 
-        for (const {id, user} of newData) {
-            const userData = client.selectIntoDatabase('42/Users', {login: user.login});
+        for (const {user} of newData) {
+            const {id, login, image} = user;
+            const userData = client.selectIntoDatabase('42/Users', {userId: id});
             if (!userData) {
-                client.insertIntoDatabase('42/Users', {userId: id, login: user.login, image: user.image});
+                client.insertIntoDatabase('42/Users', {userId: id, login, image: image});
             } else if (userData.image !== user.image) {
-                client.updateIntoDatabase('42/Users', {login: user.login, image: user.image}, {userId: id});
+                client.updateIntoDatabase('42/Users', {login: login, image: image}, {userId: id});
             };
         };
 

@@ -40,24 +40,6 @@ async function functions(client) {
     };
 
     // 42 API
-    client.getClusterDisplay = (name) => {
-      const [bat, fullHost] = name.split('-');
-
-      if (!['bess', 'paul', 'made'].includes(bat)) {
-        return null;
-      };
-
-      let cluster = fullHost.substring(0, 3);
-      let host = fullHost.slice(3);
-    
-      if (['bess', 'paul'].includes(bat)) {
-        cluster = fullHost.substring(0, 2);
-        host = fullHost.slice(2);
-      };
-
-      return {bat, cluster, host};
-    };
-
     client.getParisCampusLocations = async () => {
       const output = [];
 
@@ -86,12 +68,13 @@ async function functions(client) {
 
         const jsonData = await data.json();
         for (const {id, host, user} of jsonData) {
-          const clusterDisplay = client.getClusterDisplay(host);
-          if (!clusterDisplay) {
+          const [bat] = host.split('-');
+          if (!['bess', 'paul', 'made'].includes(bat)) {
             continue;
           };
           const {login, image} = user;
-          output.push({id: String(id), host, clusterDisplay, user: {
+          output.push({id: String(id), host, user: {
+            id: String(user.id),
             login,
             image: image.link,
           }});
