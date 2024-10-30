@@ -42,7 +42,7 @@ async function initAPI(client) {
             const fortyTwoUserId = FortyTwoSyncDB.fortyTwoUserId;
     
             const userData = client.selectIntoDatabase('42/Users', {userId: fortyTwoUserId});
-            const selectedClusters = data.filter((d) => d.user.id === userData.id);
+            const selectedClusters = data.filter((d) => d.user.id === userData.userId);
     
             if (selectedClusters.length !== 1) {
                 return res.status(401).send('Impossible d\'identifier le cluster de l\'utilisateur 42.\n');
