@@ -20,7 +20,7 @@ async function initAPI(client) {
 
         for (const key of ['status', 'userKey']) {
             if (!Object.keys(body).includes(key)) {
-              return res.status(401).send('Veuillez indiquer le status et le userKey dans la requête.');
+              return res.status(401).send('Veuillez indiquer le status et le userKey dans la requête.\n');
             };
         };
 
@@ -39,10 +39,12 @@ async function initAPI(client) {
         const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
         const data = JSON.parse(FortyTwoDB.clustersData);
         const fortyTwoUserId = FortyTwoSyncDB.fortyTwoUserId;
-        const selectedClusters = data.filter((d) => d.id === fortyTwoUserId);
+
+        const userData = client.selectIntoDatabase('42/Users', {userId: fortyTwoUserId});
+        const selectedClusters = data.filter((d) => d.user.login === userData.login);
 
         if (selectedClusters.length !== 1) {
-            return res.status(401).send('Impossible d\'identifier le cluster de l\'utilisateur 42.');
+            return res.status(401).send('Impossible d\'identifier le cluster de l\'utilisateur 42.\n');
         };
 
         const selectedCluster = selectedClusters[0];
@@ -52,7 +54,7 @@ async function initAPI(client) {
 
         if (status === 'locked') {
             if (LockSystemDB && LockSystemDB.status === 'locked') {
-                return res.status(401).send('Utilisateur déjà détecté comme locked.');
+                return res.status(401).send('Utilisateur déjà détecté comme locked.\n');
             } else if (LockSystemDB) {
                 client.updateIntoDatabase('42/LockSystem', {
                     host,
@@ -81,9 +83,9 @@ async function initAPI(client) {
             console.log(`[🔒] Lock détecté pour userId: ${fortyTwoUserId} !`);
         } else {
             if (LockSystemDB && LockSystemDB.status === 'unlocked') {
-                return res.status(401).send('Utilisateur déjà détecté comme unlocked.');
+                return res.status(401).send('Utilisateur déjà détecté comme unlocked.\n');
             } else if ((now - LockSystemDB.lockedAt) < 2000) {
-                return res.status(401).send('Très rapide pour unlock, on essaie de spam l\'API ?');
+                return res.status(401).send('Très rapide pour unlock, on essaie de spam l\'API ?\n');
             } else if (LockSystemDB && LockSystemDB.host === selectedCluster.host) {
                 client.updateIntoDatabase('42/LockSystem', {
                     status,
@@ -93,11 +95,11 @@ async function initAPI(client) {
             console.log(`[🔓] Unlock détecté pour userId: ${fortyTwoUserId} !`);
         };
 
-        res.status(200).send('OK');
+        res.status(200).send('OK\n');
     });
 
     app.all('*', (_, res) => {
-        res.status(404).send('Il n\'y a rien ici...');
+        res.status(404).send('Il n\'y a rien ici...\n');
     });
 
     app.listen(process.env.API_PORT, () => {
