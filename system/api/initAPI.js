@@ -78,7 +78,7 @@ async function initAPI(client) {
                 const lockedEmbed = client.baseEmbed()
                     .setTitle('🔒 Notification de détection de lock sur un poste à 42')
                     .setThumbnail(client.userAvatar)
-                    .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 4860, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
+                    .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
     
                 await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
                 console.log(`[🔒] Lock détecté pour userId: ${fortyTwoUserId} !`);
