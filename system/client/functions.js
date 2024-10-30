@@ -62,11 +62,12 @@ async function functions(client) {
           }
         });
 
+        const jsonData = await data.json();
         if (!data.ok) {
+          console.error(`❌ Erreur avec la fonction getParisCampusLocations: ${jsonData.message}.`);
           break;
         };
 
-        const jsonData = await data.json();
         for (const {id, host, user} of jsonData) {
           const [bat] = host.split('-');
           if (!['bess', 'paul', 'made'].includes(bat)) {

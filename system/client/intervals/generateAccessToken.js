@@ -13,7 +13,7 @@ async function generateAccessToken(client) {
         client.accessToken = FortyTwoDB.accessToken;
        };
 
-       if (now > (FortyTwoDB.lastUpdate + 3600000)) {
+       if (now > (FortyTwoDB.lastUpdate + 1200000)) {
         client.updateIntoDatabase('Client/FortyTwo', {lastUpdate: now}, {id: 1});
 
         const params = new URLSearchParams();
