@@ -46,7 +46,7 @@ const Liaison42 = new DiscordCommand({
 
                 const validationEmbed = client.baseEmbed()
                     .setTitle('🔁 Confirmation de la liaison de votre compte Discord avec votre compte 42')
-                    .setDescription(`- Login: **${selectedLogin}**\n\n- Étapes:\n  - **Allez** sur cette page: https://friends42.fr/settings/\n  - **Ajoutez** cet identifiant à votre biographie (Comme sur la pièce jointe): \`${userId}\`\n  - **Faites** sauvegarder.`)
+                    .setDescription(`- Login: **${selectedLogin}**\n- Étapes:\n  - **Allez** sur cette page: https://friends42.fr/settings/\n  - **Ajoutez** cet identifiant à votre biographie (Comme sur la pièce jointe): \`${userId}\`\n  - **Faites** sauvegarder.`)
                     .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1301017221040181299/image.png');
 
                 const validation = await client.createValidation(interaction, validationEmbed, 'Confirmer la liaison de votre compte Discord avec votre compte 42 ?');
