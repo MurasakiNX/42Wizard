@@ -17,11 +17,11 @@ async function updateClustersData(client) {
         client.updateIntoDatabase('42/Clusters', {lastUpdate: now}, {id: 1});
         const newData = await client.getParisCampusLocations();
         if (!newData.length) {
+            console.error('❌ Informations sur les clusters non mis à jour !');
             return;
         };
 
         client.updateIntoDatabase('42/Clusters', {clustersData: JSON.stringify(newData)}, {id: 1});
-        console.log('✅ Informations sur les clusters mis à jour !');
     };
 };
 
