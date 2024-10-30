@@ -16,7 +16,7 @@ const Liaison42 = new DiscordCommand({
         switch (subcommand) {
             case 'informations': {
                 if (!FortyTwoSyncDB) {
-                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore initialisé la liaison de votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
+                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore relié votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
                 };
 
                 const userData = client.selectIntoDatabase('42/Users', {login: selectedLogin});
@@ -76,7 +76,7 @@ const Liaison42 = new DiscordCommand({
 
             case 'réinitialiser_clé': {
                 if (!FortyTwoSyncDB) {
-                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore initialisé la liaison de votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
+                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore relié votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
                 };
 
                 const validationEmbed = client.baseEmbed()
@@ -93,7 +93,7 @@ const Liaison42 = new DiscordCommand({
 
             case 'retirer': {
                 if (!FortyTwoSyncDB) {
-                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore initialisé la liaison de votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
+                    return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore relié votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
                 };
 
                 const validationEmbed = client.baseEmbed()
