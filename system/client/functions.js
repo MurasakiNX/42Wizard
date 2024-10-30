@@ -87,7 +87,7 @@ async function functions(client) {
             continue;
           };
           const {login, image} = user;
-          output.push({id, host, clusterDisplay, user: {
+          output.push({id: String(id), host, clusterDisplay, user: {
             login,
             image: image.link,
           }});
