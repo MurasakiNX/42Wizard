@@ -84,7 +84,7 @@ async function initAPI(client) {
             } else {
                 if (LockSystemDB && LockSystemDB.status === 'unlocked') {
                     return res.status(401).send('Utilisateur déjà détecté comme unlocked.\n');
-                } else if ((now - LockSystemDB.lockedAt) < 2000) {
+                } else if ((now - LockSystemDB.lockedAt) < 500) {
                     return res.status(401).send('Très rapide pour unlock, on essaie de spam l\'API ?\n');
                 } else if (LockSystemDB && LockSystemDB.host === selectedCluster.host) {
                     client.updateIntoDatabase('42/LockSystem', {
