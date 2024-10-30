@@ -1,49 +1,7 @@
 require('dotenv').config();
 const {DiscordCommand} = require('../../system/structures/command');
+const {readFileSync} = require('fs');
 const crypto = require('crypto');
-
-const script = `
-#!/bin/bash
-
-# Récupération du userKey depuis le fichier dans $HOME/.42
-user_key_file="$HOME/.42Wizard/userKey"
-if [[ ! -f "$user_key_file" ]]; then
-    echo "Erreur : Le fichier userKey est introuvable dans $HOME/.42Wizard."
-    exit 1
-fi
-user_key=$(cat "$user_key_file")
-
-# Fonction pour envoyer une requête HTTP avec le statut et le userKey
-send_http_request() {
-    local status=$1
-    sleep 1
-    curl -X POST -H "Content-Type: application/json" \
-        -d "{\"status\": \"$status\", \"userKey\": \"$user_key\"}" https://shogun-raiden.com/42Wizard
-}
-
-# Définir l'état initial en fonction de la présence de ft_lock
-if ps aux | grep -v grep | grep -q "ft_lock"; then
-    current_state="locked"
-else
-    current_state="unlocked"
-fi
-
-# Boucle de surveillance du processus ft_lock
-while true; do
-    if ps aux | grep -v grep | grep -q "ft_lock"; then
-        if [[ "$current_state" != "locked" ]]; then
-            echo "État verrouillé détecté, envoi de la requête HTTP"
-            send_http_request "locked"
-            current_state="locked"
-        fi
-    else
-        if [[ "$current_state" == "locked" ]]; then
-            echo "État déverrouillé détecté, envoi de la requête HTTP"
-            send_http_request "unlocked"
-            current_state="unlocked"
-        fi
-    fi
-done`;
 
 const Liaison42 = new DiscordCommand({
     name: 'liaison_42',
@@ -66,7 +24,7 @@ const Liaison42 = new DiscordCommand({
                 const userData = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId});
                 const informationsEmbed = client.baseEmbed()
                     .setTitle(`❓ Informations du profil 42 ${userData.login}`)
-                    .setDescription(`- Étapes:\n  - **Créez** un dossier \`.42Wizard\` dans votre \`home\` et placez le code ci-dessous dans un fichier \`script.sh\`.\n  - **Créez** un fichier \`userKey\` dans le dossier \`.42Wizard\` et inscrivez-y la clé d'identification.\n\n- **Exécutez** ce script avec ce que vous voulez (Minishell ???).\n- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\`\n- Script de détection:\n\`\`\`sh\n${script}\`\`\`\n`)
+                    .setDescription(`- Étapes:\n  - **Créez** un dossier \`.42Wizard\` (C'est un dossier caché, n'oubliez pas de les afficher) dans votre \`home\` et placez le code ci-dessous dans un fichier \`script.sh\` (N'oubliez pas de \`chmod +x\`).\n  - **Créez** un fichier \`userKey\` dans le dossier \`.42Wizard\` et inscrivez-y la clé d'identification.\n\n- **Exécutez** ce script avec ce que vous voulez (Minishell ???).\n- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\`\n- Script de détection:\n\`\`\`sh\n${readFileSync('./script.sh', 'utf8')}\`\`\`\n`)
                     .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1301168349425700966/image.png');
 
                 await interaction.sendEmbed(informationsEmbed);
