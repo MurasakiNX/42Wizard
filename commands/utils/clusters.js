@@ -4,7 +4,7 @@ const {time} = require('discord.js');
 const Clusters = new DiscordCommand({
   name: 'clusters',
   description: 'Affiche des informations sur les clusters du campus de Paris',
-  category: '❓Informations',
+  category: '⚙️ Autres',
   run: async (client, interaction) => {
     const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
     const data = JSON.parse(FortyTwoDB.clustersData);

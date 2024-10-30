@@ -29,6 +29,20 @@ CREATE TABLE Clusters(
     lastUpdate INTEGER NOT NULL
 );
 
+CREATE TABLE Users(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    userId TEXT NOT NULL,
+    login TEXT NOT NULL,
+    image TEXT NOT NULL
+);
+
+CREATE TABLE Sync(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    discordUserId TEXT NOT NULL,
+    fortyTwoUserId TEXT NOT NULL,
+    dmChannelId TEXT NOT NULL,
+    syncKey TEXT NOT NULL
+);
 */
 ""
 require('dotenv').config();

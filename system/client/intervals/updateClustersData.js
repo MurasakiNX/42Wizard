@@ -11,7 +11,6 @@ async function updateClustersData(client) {
 
     const now = Date.now();
     const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
-    const previousData = JSON.parse(FortyTwoDB.clustersData); // Servira plus tard.
 
     if (now > (FortyTwoDB.lastUpdate + 30000)) {
         client.updateIntoDatabase('42/Clusters', {lastUpdate: now}, {id: 1});
@@ -19,6 +18,15 @@ async function updateClustersData(client) {
         if (!newData.length) {
             console.error('❌ Informations sur les clusters non mis à jour !');
             return;
+        };
+
+        for (const {id, user} of newData) {
+            const userData = client.selectIntoDatabase('42/Users', {userId: id});
+            if (!userData) {
+                client.insertIntoDatabase('42/Users', {userId: id, login: user.login, image: user.image});
+            } else if (userData.login !== user.login || userData.image !== user.image) {
+                client.updateIntoDatabase('42/Users', {login: user.login, image: user.image}, {userId: id});
+            };
         };
 
         client.updateIntoDatabase('42/Clusters', {clustersData: JSON.stringify(newData)}, {id: 1});
