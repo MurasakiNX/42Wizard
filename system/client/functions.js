@@ -38,6 +38,49 @@ async function functions(client) {
     
         return result;
     };
+
+    // 42 API
+    client.getParisCampusLocations = async () => {
+      const output = [];
+
+      const params = new URLSearchParams();
+      params.append('campus_id', '1');
+      params.append('per_page', '100');
+      params.append('filter[active]', 'true');
+
+      let goToNextPage = true;
+      let pageId = 1;
+      while (goToNextPage) {
+        params.set('page', String(pageId));
+        const data = await fetch(`https://api.intra.42.fr/v2/locations?${params.toString()}`, {
+          headers: {
+            Authorization: `Bearer ${client.accessToken}`
+          }
+        });
+
+        if (!data.ok) {
+          break;
+        };
+
+        const jsonData = await data.json();
+        for (const {id, host, user} of jsonData) {
+          const {login, image} = user;
+
+          output.push({id, host, user: {
+            login,
+            image: image.link
+          }});
+        };
+
+        if (jsonData.length !== 100) {
+          goToNextPage = false;
+        } else {
+          pageId++;
+        };
+      };
+      return output;
+    };
+
     await require('./discord/functions')(client);
 };
 

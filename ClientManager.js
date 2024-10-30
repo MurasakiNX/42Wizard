@@ -21,6 +21,14 @@ CREATE TABLE Discord(
     commandName TEXT NOT NULL,
     finished INTEGER NOT NULL
 );
+
+- 42:
+CREATE TABLE Clusters(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    clustersData TEXT NOT NULL,
+    lastUpdate INTEGER NOT NULL
+);
+
 */
 ""
 require('dotenv').config();
