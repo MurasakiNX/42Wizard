@@ -20,7 +20,7 @@ const Liaison42 = new DiscordCommand({
                     return await interaction.sendEmbed(client.createEmbed('Vous n\'avez pas encore relié votre compte 42 avec votre compte Discord...', {emote: 'zero', type: 'warning'}));
                 };
 
-                const userData = client.selectIntoDatabase('42/Users', {login: selectedLogin});
+                const userData = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId});
                 const informationsEmbed = client.baseEmbed()
                     .setTitle(`❓ Informations du profil 42 ${userData.login}`)
                     .setDescription(`- Clé d'identification: \`${FortyTwoSyncDB.syncKey}\``);
