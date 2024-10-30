@@ -16,6 +16,8 @@ const Trouve = new DiscordCommand({
         const data = JSON.parse(FortyTwoDB.clustersData);
         const selectedClusters = data.filter((d) => d.id === UserDB.userId);
 
+        
+
         const trouveEmbed = client.baseEmbed()
             .setThumbnail(UserDB.image)
             .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n- Position(s):${selectedClusters.length ? ('\n' + selectedClusters.map((selectedCluster) => `  - **[${selectedCluster.host}](https://meta.intra.42.fr/clusters#${selectedCluster.host})**`).join('\n')) : ' **❌ Connecté(e) nulle part**'}`);
