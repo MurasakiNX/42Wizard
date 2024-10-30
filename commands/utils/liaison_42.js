@@ -100,7 +100,7 @@ const Liaison42 = new DiscordCommand({
                 if (!validation) return;
 
                 client.updateIntoDatabase('42/Sync', {syncKey}, {discordUserId: userId});
-                await interaction.sendEmbed(client.createEmbed('La clé d\'identification pour le BOT a bien été réinitialisée. N\'oubliez pas de modifier le fichier `userKey` et reloggez-vous.', {emote: 'hundred', type: 'warning'}));
+                await interaction.sendEmbed(client.createEmbed(`La clé d'identification pour le BOT a bien été réinitialisée par \`${syncKey}\`. N'oubliez pas de modifier le fichier \`userKey\` et reloggez-vous.`, {emote: 'hundred', type: 'warning'}));
                 break;
             };
 
