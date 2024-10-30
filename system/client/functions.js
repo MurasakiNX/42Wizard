@@ -69,6 +69,10 @@ async function functions(client) {
       let goToNextPage = true;
       let pageId = 1;
       while (goToNextPage) {
+        if (pageId !== 1) {
+          await client.waitForTimeout(500);
+        };
+
         params.set('page', String(pageId));
         const data = await fetch(`https://api.intra.42.fr/v2/locations?${params.toString()}`, {
           headers: {
