@@ -1,10 +1,10 @@
 # 42Wizard
 
-**42Wizard** est un bot Discord développé pour les étudiants de l'école 42 à Paris. Ce bot aide à surveiller les connexions des utilisateurs et à prévenir des déconnexions en envoyant des notifications 42 minutes après un log. Ce système permet aux étudiants de savoir quand leur session est susceptible d'être automatiquement déconnectée, leur laissant le temps de sauvegarder leur travail.
+**42Wizard** est un bot Discord développé pour les étudiants de l'école 42 à Paris. Ce bot aide à surveiller les connexions des utilisateurs et à prévenir des déconnexions en envoyant des notifications après un lock de session. Ce système permet aux étudiants de savoir quand leur session est susceptible d'être automatiquement déconnectée, leur laissant le temps de sauvegarder leur travail.
 
 ## Fonctionnalités
 
-- **Suivi des connexions** : Détection des connexions (log) et déconnexions (delog) des utilisateurs.
+- **Suivi des connexions** : Détection des lock et delock des utilisateurs.
 - **Notifications personnalisées** : Alerte 5 minutes avant les 42 minutes pour le delog.
 
 ## Installation
