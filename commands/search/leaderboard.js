@@ -35,7 +35,7 @@ const Leaderboard = new DiscordCommand({
 			const leaderboardEmbed = client.baseEmbed()
 				.setTitle('🔒 Leaderboard des deloggers et de leurs victimes de 42')
 				.setDescription(splittedSortedUsers.map((user) => `- **[${user.login}](https://profile.intra.42.fr/users/${user.login})**, delog **${user.gotDeloggedTimes}** fois, a delog **${user.delogTimes}** fois`).join('\n'))
-				.setFields({name: '**Informations**', value: `- Type de tri: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Nombre de delogs comptabilisés: **${totalDelogTimes}**\n- Le titre de 😈👑 Professional Delogger est décerné à **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** qui a delog **${professionalDelogger.delogTimes}** fois.\n*Et puis petite pensée à **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** qui a été en tout delog **${favouriteVictim.gotDeloggedTimes}** fois...*`})
+				.setFields({name: '**Informations**', value: `- Type de tri: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Nombre de delogs comptabilisés: **${totalDelogTimes}**\n- Le titre de **\`😈👑 Professional Delogger\`** est décerné à **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** qui a delog **${professionalDelogger.delogTimes}** fois.\n*Et puis petite pensée à **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** qui a été en tout delog **${favouriteVictim.gotDeloggedTimes}** fois...*`})
 		
 			pages.push([{embed: leaderboardEmbed}]);
 		};
