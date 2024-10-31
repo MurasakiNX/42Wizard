@@ -1,17 +1,23 @@
 #!/bin/bash
 
+# Fonction pour envoyer des notifications
+notify() {
+    local msg=$1
+    notify-send "42Wizard" "$msg"
+}
+
 # Récupération du userKey depuis le fichier dans $HOME/.42
 user_key_file="$HOME/.42Wizard/userKey"
 if [[ ! -f "$user_key_file" ]]; then
-    echo "Erreur : Le fichier userKey est introuvable dans $HOME/.42Wizard."
+    notify "Erreur : Le fichier userKey est introuvable dans $HOME/.42Wizard."
     exit 1
 fi
 user_key=$(cat "$user_key_file")
+notify "script.sh lancé normalement"
 
 # Fonction pour envoyer une requête HTTP avec le statut et le userKey
 send_http_request() {
     local status=$1
-    sleep 1
     curl -X POST -H "Content-Type: application/json" \
         -d "{\"status\": \"$status\", \"userKey\": \"$user_key\"}" https://shogun-raiden.com/42Wizard
     echo
@@ -41,5 +47,5 @@ while true; do
             current_state="unlocked"
         fi
     fi
-    sleep 1
+    sleep 0.42
 done
