@@ -93,10 +93,6 @@ async function checkLockedUsers(client) {
 					await client.sendMessage(dmChannelId, deloggedEmbed);
 				};
 			};
-
-			if (lockedUser.id !== lockedUsers.at(-1).id) {
-				await client.waitForTimeout(500);
-			};
 		};
 	} catch (err) {
         console.error(`❌ Erreur avec la fonction checkLockedUsers: ${err}`);

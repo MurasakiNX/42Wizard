@@ -52,8 +52,8 @@ const Link = new DiscordCommand({
                 const validation = await client.createValidation(interaction, validationEmbed, 'Have you put your Discord userId on your Friends42 bio ?');
                 if (!validation) return;
 
-                await interaction.sendEmbed(client.createEmbed('Checking...', {emote: 'chargement'}));
-                await client.waitForTimeout(500);
+                await interaction.sendEmbed(client.createEmbed('Checking the bio...', {emote: 'chargement'}));
+                await client.waitForTimeout(250);
 
                 const data = await fetch(`https://friends42.fr/getuser/${selectedLogin}`, {
                     headers: {

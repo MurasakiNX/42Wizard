@@ -52,7 +52,7 @@ async function functions(client) {
       let pageId = 1;
       while (goToNextPage) {
         if (pageId !== 1) {
-          await client.waitForTimeout(500);
+          await client.waitForTimeout(250);
         };
 
         params.set('page', String(pageId));
