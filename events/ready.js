@@ -12,7 +12,7 @@ const Ready = new Event({
     client.deleteIntoDatabase('Cooldowns/Discord', {finished: 1});
 
     const rest = new REST({version: '10'}).setToken(client.token);
-    client.setPresence(client.maintenance ? '⚠️ Opération de maintenance en cours ⚠️' : 'aider les étudiants de 42');
+    client.setPresence(client.maintenance ? '⚠️ Currently in maintenace ⚠️' : 'help 42 Paris students');
 
     await rest.put(Routes.applicationCommands(client.user.id), {
       body: client.commands.filter((command) => !command.ownerOnly).map((command) => command.data.toJSON()),

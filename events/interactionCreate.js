@@ -44,16 +44,16 @@ const interactionCreate = new Event({
 
     if (!client.isClientOwner(interaction.user.id)) {
       if (ownerOnly) {
-        return await interaction.sendEmbed(client.createEmbed('Cette commande ne vous est d\'aucune utilité...', {emote: 'zero', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('You can\'t use this command...', {emote: 'zero', type: 'warning'}));
       } else if (client.maintenance) {
-        return await interaction.sendEmbed(client.createEmbed('Une opération de maintenance est en cours, veuillez patienter que celle-ci se termine, je suis sincèrement désolé pour la gêne occasionnée...', {emote: 'zero', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('There is a maintenace operation, please wait (Sorry)...', {emote: 'zero', type: 'warning'}));
       };
     };
 
     const userCooldown = client.selectIntoDatabase('Cooldowns/Discord', {commandName: cooldownName, userId});
 
     if (userCooldown && !userCooldown.finished) {
-      return await interaction.sendEmbed(client.createEmbed('Vous êtes déjà en train d\'utiliser cette commande, veuillez patienter que celle-ci se termine avant de recommencer.', {emote: 'zero', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed('You are already using this command, please wait that it is finished.', {emote: 'zero', type: 'warning'}));
     };
 
     if (userCooldown) {
@@ -68,7 +68,7 @@ const interactionCreate = new Event({
 
     await selectedCommand.run(client, interaction).catch(async (err) => {
       console.error(`❌ [DISCORD] Erreur avec la commande ${commandName}: ${err}.`);
-      return await interaction.sendEmbed(client.createEmbed(`Je ne suis malheureusement pas parvenue à exécuter complètement la commande \`${commandName}\`...`, {emote: 'minus_fortytwo', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed(`I was not able to run the \`${commandName}\` command...`, {emote: 'minus_fortytwo', type: 'warning'}));
     });
 
     client.updateIntoDatabase('Cooldowns/Discord', {finished: 1}, {commandName: cooldownName, userId});

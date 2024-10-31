@@ -1,7 +1,7 @@
 {
   "name": "42wizard",
   "version": "1.0.0",
-  "description": "Un BOT Discord relié à l'API de l'école 42 pour offrir des outils aux étudiants du campus de Paris.",
+  "description": "42Wizard is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord when they are about to be deloggable.",
   "main": "client.js",
   "scripts": {
     "start": "pm2 start --name=\"42Wizard\" client.js",

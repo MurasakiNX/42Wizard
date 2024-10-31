@@ -1,18 +1,18 @@
 const {DiscordCommand} = require('../../system/structures/command');
 
-const sortsTypes = [{name: 'Login 42 [A-Z]', value: 'login_asc'}, {name: 'Login 42 [Z-A]', value: 'login_dsc'}, {name: 'Plus on avance, plus on s\'approche du pas gentil [0-*]', value: 'delog_asc'}, {name: 'Plus on avance, plus on s\'éloigne du pas gentil [*-0]', value: 'delog_dsc'}, {name: 'Les victimes en dernier [0-*]', value: 'gdelog_asc'}, {name: 'Festival des victimes d\'abord [*-0]', value: 'gdelog_dsc'}];
+const sortsTypes = [{name: '42 Login [A-Z]', value: 'login_asc'}, {name: '42 Login [Z-A]', value: 'login_dsc'}, {name: 'The more the pages progress, the more we reach the bad guys [0-*]', value: 'delog_asc'}, {name: 'The further the pages go, the further we get away from the bad guys [*-0]', value: 'delog_dsc'}, {name: 'Victims last [0-*]', value: 'gdelog_asc'}, {name: 'Victims festival first [*-0]', value: 'gdelog_dsc'}];
 
 const Leaderboard = new DiscordCommand({
 	name: 'leaderboard',
-	description: 'Affiche le leaderboard des deloggers et de leurs victimes.',
-	category: '🔎 Recherche',
+	description: 'Gives the leaderboard of the deloggers and their victims.',
+	category: '🔎 Search',
 	run: async (client, interaction) => {
 		const UserDB = client.selectAllIntoDatabase('42/Users');
 
 		const professionalDelogger = UserDB.sort((a, b) => b.delogTimes - a.delogTimes)[0];
 		const favouriteVictim = UserDB.sort((a, b) => b.gotDeloggedTimes - a.gotDeloggedTimes)[0];
 
-		const selectedSortType = interaction.options.getString('type_de_tri') ?? 'login_asc';
+		const selectedSortType = interaction.options.getString('sorting_type') ?? 'login_asc';
     	const [sortBy, sortOrder] = selectedSortType.split('_');
 		const sortedUsers = client.splitArrayByParts(UserDB.sort((a, b) => {
 			if (sortOrder === 'dsc') {
@@ -33,9 +33,9 @@ const Leaderboard = new DiscordCommand({
 		const pages = [];
 		for (const splittedSortedUsers of sortedUsers) {
 			const leaderboardEmbed = client.baseEmbed()
-				.setTitle('🔒 Leaderboard des deloggers et de leurs victimes de 42')
-				.setDescription(splittedSortedUsers.map((user) => `- **[${user.login}](https://profile.intra.42.fr/users/${user.login})**, delog **${user.gotDeloggedTimes}** fois, a delog **${user.delogTimes}** fois`).join('\n'))
-				.setFields({name: '**Informations**', value: `- Type de tri: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Nombre de delogs comptabilisés: **${totalDelogTimes}**\n- Le titre de **\`😈👑 Professional Delogger\`** est décerné à **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** qui a delog **${professionalDelogger.delogTimes}** fois.\n*Et puis petite pensée à **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** qui a été en tout delog **${favouriteVictim.gotDeloggedTimes}** fois...*`})
+				.setTitle('🔒 Deloggers and victims leaderboard')
+				.setDescription(splittedSortedUsers.map((user) => `- **[${user.login}](https://profile.intra.42.fr/users/${user.login})**, delog **${user.delogTimes}** times and has been delogged **${user.gotDeloggedTimes}** times`).join('\n'))
+				.setFields({name: '**Informations**', value: `- Sorting type: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Total delogs: **${totalDelogTimes}**\n- **\`😈👑 Professional Delogger\`** title is awarded to **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** who delogged **${professionalDelogger.delogTimes}** times.\n*And then a little thought to **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** who has been delogged **${favouriteVictim.gotDeloggedTimes}** times...*`})
 		
 			pages.push([{embed: leaderboardEmbed}]);
 		};
@@ -48,7 +48,7 @@ const Leaderboard = new DiscordCommand({
 });
 
 Leaderboard.data
-	.addStringOption((option) => option.setName('type_de_tri').setDescription('🔁 • Le type de tri que vous souhaitez effectuer (Par défaut, selon les logins 42 [A-Z]).').setChoices(...sortsTypes));
+	.addStringOption((option) => option.setName('sorting_type').setDescription('🔁 • The sorting type (By default, with the 42 logins [A-Z]).').setChoices(...sortsTypes));
 
 module.exports = Leaderboard;
 

@@ -1,6 +1,6 @@
 const moment = require('moment');
 require('moment-precise-range-plugin');
-moment.locale('fr');
+moment.locale('en');
 
 /**
  * Vérifie l'état des personnes qui ont un PC lock.
@@ -27,9 +27,9 @@ async function checkLockedUsers(client) {
 				if (UserDB.userId == clusterData.user.id) {
 					if (!lockedUser.fiveMinutesReminded && elapsed >= 2220000) {
 						const reminderEmbed = client.baseEmbed()
-							.setTitle('🔒 Notification de rappel de reconnexion sur un poste à 42 5 minutes avant la possibilité de delog')
+							.setTitle('🔒 You are about to be deloggable (37 minutes elapsed)')
 							.setThumbnail(UserDB.image)
-							.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n`);
+							.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n`);
 	
 						client.updateIntoDatabase('42/LockSystem', {
 							fiveMinutesReminded: 1,
@@ -61,9 +61,9 @@ async function checkLockedUsers(client) {
 					};
 
 					const deloggedEmbed = client.baseEmbed()
-						.setTitle('🔓 Notification de delog manuel sur votre poste')
+						.setTitle('🔓 A student has manually delogged you')
 						.setThumbnail(clusterData.user.image)
-						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Login du delogger: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delog après **${formattedElapsed}**\n\n- Nombre de delogs du delogger: **${delogTimes}**\n- Nombre de delogs que vous avez reçus: **${gotDeloggedTimes}**`)
+						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Delogger's login: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delogged after **${formattedElapsed}**\n\n- Delogger's delog times: **${delogTimes}**\n- You have been delogged **${gotDeloggedTimes}** times.`)
 						.setImage(delogGIF);
 
 					client.updateIntoDatabase('42/LockSystem', {
@@ -81,15 +81,15 @@ async function checkLockedUsers(client) {
 
 				if (elapsed >= 5040000) {
 					const autoDeloggedEmbed = client.baseEmbed()
-						.setTitle('🔓 Notification de delog automatique sur votre poste (1 heure 24 minutes écoulées)')
+						.setTitle('🔓 You have been delogged automatically (1 hour and 24 minutes elapsed)')
 						.setThumbnail(UserDB.image)
-						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
+						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 					await client.sendMessage(dmChannelId, autoDeloggedEmbed);
 				} else if (elapsed >= 2520000) {
 					const deloggedEmbed = client.baseEmbed()
-						.setTitle('🔓 Notification de delog manuel sur votre poste (Sans reconnexion)')
+						.setTitle('🔓 A unknown student has manually delogged you')
 						.setThumbnail(UserDB.image)
-						.setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
+						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 					await client.sendMessage(dmChannelId, deloggedEmbed);
 				};
 			};

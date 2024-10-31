@@ -102,18 +102,18 @@ async function functions(client) {
       const buttons = new ActionRowBuilder()
           .setComponents(new ButtonBuilder()
               .setCustomId(`${now}_confirm`)
-              .setLabel('Confirmer')
+              .setLabel('Confirm')
               .setEmoji('✅')
               .setStyle(ButtonStyle.Success),
           new ButtonBuilder()
               .setCustomId(`${now}_cancel`)
-              .setLabel('Annuler')
+              .setLabel('Cancel')
               .setEmoji('✖️')
               .setStyle(ButtonStyle.Danger));
 
       validationEmbed
           .setThumbnail(interaction.userAvatar)
-          .setFields(...(validationEmbed.data.fields || []), {name: interaction.displayName, value: `${question} (Si aucune réponse, ce message sera modifié dans une minute).`});
+          .setFields(...(validationEmbed.data.fields || []), {name: interaction.displayName, value: `${question} (If no answer, this message will be edited in one minute).`});
       const message = await interaction.editReply({embeds: [validationEmbed], components: [buttons]});
 
       const filter = (i) => [`${now}_confirm`, `${now}_cancel`].includes(i.customId);
@@ -121,7 +121,7 @@ async function functions(client) {
 
       collector.on('collect', async (i) => {
         if (i.user.id !== interaction.user.id) {
-          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
+          return i.reply({embeds: [client.createEmbed(`I may be wrong, but you're not ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
         collector.stop(i.customId.slice(now.length + 1));
       });
@@ -134,7 +134,7 @@ async function functions(client) {
           await interaction.deleteReply({components: []}).catch(() => {});
           resolve(false);
         };
-        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'minus_fortytwo', type: 'warning'}));
+        await interaction.sendEmbed(client.createEmbed('One minute elapsed, please redo the command.', {emote: 'minus_fortytwo', type: 'warning'}));
         return resolve(false);
       });
     });
@@ -146,21 +146,21 @@ async function functions(client) {
       const selection = new ActionRowBuilder()
           .setComponents(new StringSelectMenuBuilder()
               .setCustomId(`${now}_selection`)
-              .setPlaceholder('Veuillez sélectionner une page')
-              .setOptions([{label: 'Annuler', emoji: '❌', value: 'cancel'}, ...list.map((element) => {
+              .setPlaceholder('Please select a page')
+              .setOptions([{label: 'Cancel', emoji: '❌', value: 'cancel'}, ...list.map((element) => {
                 if (element.emoji.length > 2) {
                   element.emoji = client.getEmote(element.emoji);
                 };
                 return element;
               })]));
 
-      const message = await interaction.editReply({embeds: [client.createEmbed(`Veuillez faire votre choix dans la liste ci-dessous \`(${list.length} résultats)\`, vous pouvez annuler en choisissant l'option d'annulation *ou en attendant une minute*.`, {emote: 'hundred'})], components: [selection]});
+      const message = await interaction.editReply({embeds: [client.createEmbed(`Please make a choice \`(${list.length} resultts)\`, you can cancel by chosing the cancel option *or by waiting one minute*.`, {emote: 'hundred'})], components: [selection]});
       const filter = (i) => i.customId === `${now}_selection`;
       const collector = message.createMessageComponentCollector({filter, time: 60000});
 
       collector.on('collect', async (i) => {
         if (i.user.id !== interaction.user.id) {
-          return i.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
+          return i.reply({embeds: [client.createEmbed(`I may be wrong, but you're not ${interaction.displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
         collector.stop(i.values[0]);
       });
@@ -173,7 +173,7 @@ async function functions(client) {
           await interaction.deleteReply({components: []}).catch(() => {});
           resolve('cancel');
         };
-        await interaction.sendEmbed(client.createEmbed('Le délai d\'une minute a été dépassé, veuillez réeffectuer la commande.', {emote: 'minus_fortytwo', type: 'warning'}));
+        await interaction.sendEmbed(client.createEmbed('One minute elapsed, please redo the command.', {emote: 'minus_fortytwo', type: 'warning'}));
         return resolve('cancel');
       });
     });
@@ -182,11 +182,11 @@ async function functions(client) {
   client.createPagesSystem = async (interaction, pages, type) => {
     const userId = interaction.user.id;
     pages.map((page, i) => {
-      const pageIndex = ` (Page n°${i+1}/${pages.length})`;
+      const pageIndex = ` (Page ${i+1}/${pages.length})`;
       page.map((level, i) => {
         level.embed.data.footer.text += pageIndex;
         if (page.length > 1) {
-          level.embed.data.footer.text += ` (Niveau n°${i+1}/${page.length})`;
+          level.embed.data.footer.text += ` (Level ${i+1}/${page.length})`;
         };
       });
     });
@@ -199,8 +199,8 @@ async function functions(client) {
         const selection = new ActionRowBuilder()
             .setComponents(new StringSelectMenuBuilder()
                 .setCustomId('selection')
-                .setPlaceholder('Veuillez sélectionner une page')
-                .setOptions([{label: 'Supprimer le message', emoji: '🗑️', value: 'delete'}, ...pages.map((page, i) => {
+                .setPlaceholder('Please select a page')
+                .setOptions([{label: 'Delete the message', emoji: '🗑️', value: 'delete'}, ...pages.map((page, i) => {
                   page = page[0];
                   return {label: page.label || page.embed.data.title.replace(/:.*:/g, '').substr(0, 100), emoji: client.getEmote(page.emote), value: String(i)};
                 })]));
@@ -218,43 +218,43 @@ async function functions(client) {
         const buttons = new ActionRowBuilder()
             .setComponents(new ButtonBuilder()
                 .setCustomId('previous_page')
-                .setLabel('Page précédente')
+                .setLabel('Previous page')
                 .setEmoji('⏪')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true),
             new ButtonBuilder()
                 .setCustomId('delete')
-                .setLabel('Supprimer le message')
+                .setLabel('Delete the message')
                 .setEmoji('🗑️')
                 .setStyle(ButtonStyle.Danger),
             new ButtonBuilder()
                 .setCustomId('next_page')
-                .setLabel('Page suivante')
+                .setLabel('Next page')
                 .setEmoji('⏩')
                 .setStyle(ButtonStyle.Primary));
 
         const previousLevelButton = new ButtonBuilder()
             .setCustomId('previous_level')
-            .setLabel('Niveau précédent')
+            .setLabel('Previous level')
             .setEmoji('⏬')
             .setStyle(ButtonStyle.Primary)
             .setDisabled(true);
 
         const nextLevelButton = new ButtonBuilder()
             .setCustomId('next_level')
-            .setLabel('Niveau suivant')
+            .setLabel('Next level')
             .setEmoji('⏫')
             .setStyle(ButtonStyle.Primary);
 
         const selectPageButton = new ButtonBuilder()
             .setCustomId('select_page')
-            .setLabel('Sélectionner la page')
+            .setLabel('Select the page')
             .setEmoji('🔢')
             .setStyle(ButtonStyle.Secondary);
 
         const selectLevelButton = new ButtonBuilder()
             .setCustomId('select_level')
-            .setLabel('Sélectionner le niveau')
+            .setLabel('Select the level')
             .setEmoji('🔢')
             .setStyle(ButtonStyle.Secondary);
 
@@ -294,41 +294,41 @@ async function functions(client) {
     const buttons = new ActionRowBuilder()
         .setComponents(new ButtonBuilder()
             .setCustomId('previous_page')
-            .setLabel('Page précédente')
+            .setLabel('Previous page')
             .setEmoji('⏪')
             .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
             .setCustomId('delete')
-            .setLabel('Supprimer le message')
+            .setLabel('Delete the message')
             .setEmoji('🗑️')
             .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
             .setCustomId('next_page')
-            .setLabel('Page suivante')
+            .setLabel('Next page')
             .setEmoji('⏩')
             .setStyle(ButtonStyle.Primary));
 
     const previousLevelButton = new ButtonBuilder()
         .setCustomId('previous_level')
-        .setLabel('Niveau précédent')
+        .setLabel('Previous level')
         .setEmoji('⏬')
         .setStyle(ButtonStyle.Primary);
 
     const nextLevelButton = new ButtonBuilder()
         .setCustomId('next_level')
-        .setLabel('Niveau suivant')
+        .setLabel('Next level')
         .setEmoji('⏫')
         .setStyle(ButtonStyle.Primary);
 
     const selectPageButton = new ButtonBuilder()
         .setCustomId('select_page')
-        .setLabel('Sélectionner la page')
+        .setLabel('Select the page')
         .setEmoji('🔢')
         .setStyle(ButtonStyle.Secondary);
 
     const selectLevelButton = new ButtonBuilder()
         .setCustomId('select_level')
-        .setLabel('Sélectionner le niveau')
+        .setLabel('Select the level')
         .setEmoji('🔢')
         .setStyle(ButtonStyle.Secondary);
 
@@ -341,9 +341,9 @@ async function functions(client) {
         const user = await client.fetchUser(userId);
         if (user) {
           const displayName = user.globalName || user.username;
-          return await interaction.reply({embeds: [client.createEmbed(`Je me trompe peut-être, mais vous n'êtes pas ${displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
+          return await interaction.reply({embeds: [client.createEmbed(`I may be wrong, but you're not ${displayName}.`, {emote: 'zero', type: 'warning'})], ephemeral: true});
         };
-        return await interaction.reply({embeds: [client.createEmbed('Seule la personne qui a effectuée cette commande peut naviguer entre les pages.', {emote: 'zero', type: 'warning'})], ephemeral: true});
+        return await interaction.reply({embeds: [client.createEmbed('Only the person that has done this command can navigate between pages.', {emote: 'zero', type: 'warning'})], ephemeral: true});
       };
 
       const pages = JSON.parse(PagesEmbedsDB.pages);
@@ -374,12 +374,12 @@ async function functions(client) {
             const now = Date.now().toString();
             const selectPageModal = new ModalBuilder()
                 .setCustomId(`${now}_select_page`)
-                .setTitle('🔢 Sélectionner la page')
+                .setTitle('🔢 Select the page')
                 .setComponents(new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
                         .setCustomId('selected_page')
-                        .setLabel('N° de la page')
-                        .setPlaceholder('Veuillez entrer le n° de la page')
+                        .setLabel('Page number')
+                        .setPlaceholder('Please enter the page number')
                         .setStyle(TextInputStyle.Short)
                         .setMaxLength(pages.length.toString().length)
                         .setRequired(true)));
@@ -461,12 +461,12 @@ async function functions(client) {
             const now = Date.now().toString();
             const selectLevelModal = new ModalBuilder()
                 .setCustomId(`${now}_select_level`)
-                .setTitle('🔢 Sélectionner le niveau')
+                .setTitle('🔢 Select the level')
                 .setComponents(new ActionRowBuilder().setComponents(
                     new TextInputBuilder()
                         .setCustomId('selected_level')
-                        .setLabel('N° du niveau')
-                        .setPlaceholder('Veuillez entrer le n° du niveau')
+                        .setLabel('Level number')
+                        .setPlaceholder('Please enter the level number')
                         .setStyle(TextInputStyle.Short)
                         .setMaxLength(pages[currentPage].length.toString().length)
                         .setRequired(true)));

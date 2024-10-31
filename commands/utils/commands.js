@@ -2,12 +2,12 @@ const {DiscordCommand} = require('../../system/structures/command');
 const {capitalize} = require('lodash');
 const {SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder} = require('discord.js');
 
-const Commandes = new DiscordCommand({
-  name: 'commandes',
-  description: 'Donne des informations sur mes commandes.',
-  category: '⚙️ Autres',
+const Commands = new DiscordCommand({
+  name: 'commands',
+  description: 'Gives informations about 42Wizard commands.',
+  category: '⚙️ Utils',
   run: async (client, interaction) => {
-    let selectedCommand = interaction.options.getString('commande');
+    let selectedCommand = interaction.options.getString('command');
 
     const commands = client.commands.filter((command) => !command.ownerOnly);
 
@@ -21,7 +21,7 @@ const Commandes = new DiscordCommand({
       };
 
       const commandsListEmbed = client.baseEmbed()
-          .setTitle('📚 Liste de mes commandes')
+          .setTitle('📚 Commands list')
           .setFields(...Object.keys(parsedCommands).sort((a, b) => parsedCommands[b].length - parsedCommands[a].length).map((parsedCommandCategory) => {
             return {
               name: `**${parsedCommandCategory} (${parsedCommands[parsedCommandCategory].length})**`,
@@ -35,7 +35,7 @@ const Commandes = new DiscordCommand({
     const selectedCommands = commands.filter((command) => client.compareText(command.name, selectedCommand)).slice(0, 20);
 
     if (!selectedCommands.length) {
-      return await interaction.sendEmbed(client.createEmbed('Aucune commande n\'a été trouvée avec cette recherche...', {emote: 'hein', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed('Cannot find a command with this command name.', {emote: 'hein', type: 'warning'}));
     } else if (selectedCommands.length === 1) {
       selectedCommand = selectedCommands[0];
     } else {
@@ -49,14 +49,14 @@ const Commandes = new DiscordCommand({
     const {name, description, category, data} = selectedCommand;
 
     const commandEmbed = client.baseEmbed()
-        .setTitle(`❓ Informations sur ma commande \`${name}\``)
-        .setDescription(`> *${description}*\n- Catégorie: **${category}**`);
+        .setTitle(`❓ \`${name}\` command informations`)
+        .setDescription(`> *${description}*\n- Catégory: **${category}**`);
 
     if (data.options.length) {
       if (data.options[0] instanceof SlashCommandSubcommandGroupBuilder) {
-        commandEmbed.data.description += `\n\n**Groupes de sous-commandes (${data.options.length})**\n` + data.options.map((SubcommandGroupOption) => `- \`${SubcommandGroupOption.name}\` (/${name} ${SubcommandGroupOption.name}): **${SubcommandGroupOption.description}**\n${SubcommandGroupOption.options.map((SubcommandOption) => `  - \`${SubcommandOption.name}\` (/${name} ${SubcommandGroupOption.name} ${SubcommandOption.name}): **${SubcommandOption.description}**`).join('\n')}`).join('\n');
+        commandEmbed.data.description += `\n\n**Sub-commands groups (${data.options.length})**\n` + data.options.map((SubcommandGroupOption) => `- \`${SubcommandGroupOption.name}\` (/${name} ${SubcommandGroupOption.name}): **${SubcommandGroupOption.description}**\n${SubcommandGroupOption.options.map((SubcommandOption) => `  - \`${SubcommandOption.name}\` (/${name} ${SubcommandGroupOption.name} ${SubcommandOption.name}): **${SubcommandOption.description}**`).join('\n')}`).join('\n');
       } else if (data.options[0] instanceof SlashCommandSubcommandBuilder) {
-        commandEmbed.data.description += `\n\n**Sous-commandes (${data.options.length})**\n` + data.options.map((SubcommandOption) => `- \`${SubcommandOption.name}\` (/${name} ${SubcommandOption.name}): **${SubcommandOption.description}**`).join('\n');
+        commandEmbed.data.description += `\n\n**Sub-commands (${data.options.length})**\n` + data.options.map((SubcommandOption) => `- \`${SubcommandOption.name}\` (/${name} ${SubcommandOption.name}): **${SubcommandOption.description}**`).join('\n');
       };
     };
 
@@ -64,7 +64,7 @@ const Commandes = new DiscordCommand({
   },
 });
 
-Commandes.data
-    .addStringOption((option) => option.setName('commande').setDescription('🆔 • Le nom de la commande que vous souhaitez voir (Par défaut la liste).'));
+Commands.data
+    .addStringOption((option) => option.setName('command').setDescription('🆔 • The command name (By default, the list).'));
 
-module.exports = Commandes;
+module.exports = Commands;

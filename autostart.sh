@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Crée le dossier ~/.config/autostart s'il n'existe pas déjà
+# Creates the autostart directory if it doesn't exist.
 mkdir -p "$HOME/.config/autostart"
 
-# Crée le fichier 42Wizard.desktop avec le contenu souhaité
+# Creates the desktop file to autostart the script.
 cat <<EOL > "$HOME/.config/autostart/ft_wizard.desktop"
 [Desktop Entry]
 Type=Application
 Exec=$HOME/.42Wizard/script.sh
-Name=42 Wizard
-Comment=Script de démarrage automatique pour 42 Wizard
+Name=42Wizard
+Comment=42 Wizard Startup Script
 EOL
 
-echo "Le fichier 42Wizard.desktop a été créé dans ~/.config/autostart/"
+echo "ft_wizard.desktop has been created at $HOME/.config/autostart/, don't forget to relog to run the script automatically."
