@@ -12,7 +12,7 @@
 ## Installation
 
 1. **Invite 42Wizard** : Use [this link](https://discord.com/oauth2/authorize?client_id=1300932692749189235) to invite 42Wizard to your Discord account.
-2. **Configure les direct messages** : Make sure that you can send messages to the BOT.
+2. **Configure direct messages** : Make sure that you can send messages to the BOT.
 3. **View commands** : Type `/` to open the commands panel. There is also a `/commands` command.
 
 ## Commands
