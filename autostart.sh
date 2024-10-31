@@ -9,7 +9,7 @@ cat <<EOL > "$HOME/.config/autostart/ft_wizard.desktop"
 Type=Application
 Exec=$HOME/.42Wizard/script.sh
 Name=42 Wizard
-Comment=Script de démarrage automatique pour 42 Wizardaaaa
+Comment=Script de démarrage automatique pour 42 Wizard
 EOL
 
 echo "Le fichier 42Wizard.desktop a été créé dans ~/.config/autostart/"
