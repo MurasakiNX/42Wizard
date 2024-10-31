@@ -56,8 +56,18 @@ async function initAPI(client) {
             if (status === 'locked') {
                 if (LockSystemDB && LockSystemDB.status === 'locked') {
                     return res.status(401).send('Utilisateur déjà détecté comme locked.\n');
-                } else if (LockSystemDB) {
+                };
+                
+                const lockedEmbed = client.baseEmbed()
+                .setTitle('🔒 Notification de détection de lock sur un poste à 42')
+                .setThumbnail(client.userAvatar)
+                .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
+
+                const message = await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
+
+                if (LockSystemDB) {
                     client.updateIntoDatabase('42/LockSystem', {
+                        lockDiscordMessageId: message.id || '',
                         host,
                         status,
                         lockedAt: now,
@@ -67,20 +77,14 @@ async function initAPI(client) {
                 } else {
                     client.insertIntoDatabase('42/LockSystem', {
                         fortyTwoUserId,
+                        lockDiscordMessageId: message.id || '',
                         host,
                         status,
                         lockedAt: now,
                         unlockedAt: 0,
                         fiveMinutesReminded: 0
                     });
-                };
-    
-                const lockedEmbed = client.baseEmbed()
-                    .setTitle('🔒 Notification de détection de lock sur un poste à 42')
-                    .setThumbnail(client.userAvatar)
-                    .setDescription(`- Poste: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Possibilité de delog: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Delog automatique: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*Vous recevrez automatiquement une notification **5 minutes** avant la possibilité de delog.*`);
-    
-                await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
+                };           
             } else {
                 if (LockSystemDB && LockSystemDB.status === 'unlocked') {
                     return res.status(401).send('Utilisateur déjà détecté comme unlocked.\n');
@@ -91,6 +95,9 @@ async function initAPI(client) {
                         status,
                         unlockedAt: Date.now(),
                     }, {fortyTwoUserId});
+                    if (LockSystemDB.lockDiscordMessageId) {
+                        await client.deleteMessage(FortyTwoSyncDB.dmChannelId, LockSystemDB.lockDiscordMessageId);
+                    };
                 };
             };
     

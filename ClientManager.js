@@ -49,6 +49,7 @@ CREATE TABLE Sync(
 CREATE TABLE LockSystem(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     fortyTwoUserId TEXT NOT NULL,
+    lockDiscordMessageId TEXT NOT NULL,
     host TEXT NOT NULL,
     status TEXT NOT NULL,
     lockedAt INTEGER NOT NULL,
