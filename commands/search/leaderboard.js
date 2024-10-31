@@ -34,8 +34,8 @@ const Leaderboard = new DiscordCommand({
 		for (const splittedSortedUsers of sortedUsers) {
 			const leaderboardEmbed = client.baseEmbed()
 				.setTitle('🔒 Deloggers and victims leaderboard')
-				.setDescription(splittedSortedUsers.map((user) => `- **[${user.login}](https://profile.intra.42.fr/users/${user.login})**, delog **${user.delogTimes}** times and has been delogged **${user.gotDeloggedTimes}** times`).join('\n'))
-				.setFields({name: '**Informations**', value: `- Sorting type: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Total delogs: **${totalDelogTimes}**\n- **\`😈👑 Professional Delogger\`** title is awarded to **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** who delogged **${professionalDelogger.delogTimes}** times.\n*And then a little thought to **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** who has been delogged **${favouriteVictim.gotDeloggedTimes}** times...*`})
+				.setDescription(splittedSortedUsers.map((user) => `- **[${user.login}](https://profile.intra.42.fr/users/${user.login})**, delog **${user.delogTimes}** time(s) and has been delogged **${user.gotDeloggedTimes}** time(s)`).join('\n'))
+				.setFields({name: '**Informations**', value: `- Sorting type: **${sortsTypes.find((sortType) => sortType.value === selectedSortType).name}**\n- Total delogs: **${totalDelogTimes}**\n- **\`😈👑 Professional Delogger\`** title is awarded to **[${professionalDelogger.login}](https://profile.intra.42.fr/users/${professionalDelogger.login})** who delogged **${professionalDelogger.delogTimes}** time(s).\n*And then a little thought to **[${favouriteVictim.login}](https://profile.intra.42.fr/users/${favouriteVictim.login})** who has been delogged **${favouriteVictim.gotDeloggedTimes}** time(s)...*`})
 		
 			pages.push([{embed: leaderboardEmbed}]);
 		};

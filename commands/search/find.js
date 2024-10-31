@@ -18,7 +18,7 @@ const Find = new DiscordCommand({
 
         const trouveEmbed = client.baseEmbed()
             .setThumbnail(UserDB.image)
-            .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n- Current host(s):${selectedClusters.length ? ('\n' + selectedClusters.map((selectedCluster) => `  - **[${selectedCluster.host}](https://meta.intra.42.fr/clusters#${selectedCluster.host})**`).join('\n')) : ' **Not connected**'}\n\n- 😈 Delog **${UserDB.delogTimes}** times.\n- 😢 Has been delogged **${UserDB.gotDeloggedTimes}** times.`);
+            .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n- Current host(s):${selectedClusters.length ? ('\n' + selectedClusters.map((selectedCluster) => `  - **[${selectedCluster.host}](https://meta.intra.42.fr/clusters#${selectedCluster.host})**`).join('\n')) : ' **Not connected**'}\n\n- 😈 Delog **${UserDB.delogTimes}** time(s).\n- 😢 Has been delogged **${UserDB.gotDeloggedTimes}** time(s).`);
 
         return await interaction.sendEmbed(trouveEmbed);
     },

@@ -63,7 +63,7 @@ async function checkLockedUsers(client) {
 					const deloggedEmbed = client.baseEmbed()
 						.setTitle('🔓 A student has manually delogged you')
 						.setThumbnail(clusterData.user.image)
-						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Delogger's login: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delogged after **${formattedElapsed}**\n\n- Delogger's delog times: **${delogTimes}**\n- You have been delogged **${gotDeloggedTimes}** times.`)
+						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Delogger's login: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delogged after **${formattedElapsed}**\n\n- Delogger's delog time(s): **${delogTimes}**\n- You have been delogged **${gotDeloggedTimes}** time(s).`)
 						.setImage(delogGIF);
 
 					client.updateIntoDatabase('42/LockSystem', {
