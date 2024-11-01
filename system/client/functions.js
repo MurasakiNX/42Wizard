@@ -1,5 +1,6 @@
 const {deburr} = require('lodash');
 const {selectAllIntoDatabase, selectIntoDatabase, insertIntoDatabase, updateIntoDatabase, deleteIntoDatabase} = require('../../ClientManager');
+const {STATUS_CODES} = require('http');
 
 /**
  * Initialise les fonctions globales du bot.
@@ -37,6 +38,13 @@ async function functions(client) {
         };
     
         return result;
+    };
+
+    client.sendStatus = (res, status, sendData={}, json=true) => {
+      if (json) {
+        return res.status(status).json({...client.baseResponse, status, response: STATUS_CODES[status], ...sendData});
+      };
+      return res.status(status).send(sendData);
     };
 
     // 42 API

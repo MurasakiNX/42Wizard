@@ -19,7 +19,7 @@ notify "[STARTED UP]: 42Wizard loaded successfully!"
 send_http_request() {
     local status=$1
     curl -X POST -H "Content-Type: application/json" \
-        -d "{\"status\": \"$status\", \"userKey\": \"$user_key\"}" https://shogun-raiden.com/42Wizard
+        -d "{\"status\": \"$status\", \"userKey\": \"$user_key\"}" https://42Wizard.fr/toggleLockStatus
 }
 
 # At startup, you are unlocked.

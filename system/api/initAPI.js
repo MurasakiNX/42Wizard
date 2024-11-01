@@ -15,8 +15,8 @@ async function initAPI(client) {
         app.use(bodyParser.urlencoded({extended: false}));
         app.use(bodyParser.json());
         app.use(cors());
-    
-        app.post('/42Wizard', async (req, res) => {
+
+        app.use((req, res, next) => {
             const ip = req.headers['x-forwarded-for'] || '0.0.0.0';
             const authorizedIPs = process.env.AUTHORIZED_IPS.split(',');
             const parts = ip.split('.');
@@ -30,26 +30,33 @@ async function initAPI(client) {
                 };
                 return true;
             })) {
-                return res.status(401).send('IP non autorisée.\n');
+                return client.sendStatus(res, 401, {data: {message: 'The 42Wizard API is not accessible for this IP address.'}});
             };
+            next();
+        });
 
+        app.get('/', (_, res) => {
+            return client.sendStatus(res, 200, {data: {message: 'Welcome to the 42Wizard API!'}});
+        });
+
+        app.post('/toggleLockStatus', async (req, res) => {
             const body = req.body;
             for (const key of ['status', 'userKey']) {
                 if (!Object.keys(body).includes(key)) {
-                  return res.status(401).send('Veuillez indiquer le status et le userKey dans la requête.\n');
+                    return client.sendStatus(res, 401, {data: {message: 'Please make sure that you have entered the status and the userKey.'}});
                 };
             };
     
             const status = String(body.status);
             if (!['locked', 'unlocked'].includes(status)) {
-                return res.status(401).send('Veuillez indiquer un status correct.');
+                return client.sendStatus(res, 401, {data: {message: 'Unknown status specified.'}});
             };
     
             const userKey = String(body.userKey);
             const FortyTwoSyncDB = client.selectIntoDatabase('42/Sync', {syncKey: userKey});
     
             if (!FortyTwoSyncDB) {
-                return res.status(401).send('Impossible d\'identifier l\'utilisateur 42.');
+                return client.sendStatus(res, 401, {data: {message: 'Cannot find any 42 student with this authentication key.'}});
             };
     
             const FortyTwoDB = client.selectIntoDatabase('42/Clusters', {id: 1});
@@ -60,7 +67,7 @@ async function initAPI(client) {
             const selectedClusters = data.filter((d) => d.user.id === userData.userId);
     
             if (selectedClusters.length !== 1) {
-                return res.status(401).send('Impossible d\'identifier le cluster de l\'utilisateur 42.\n');
+                return client.sendStatus(res, 401, {data: {message: 'Cannot find the host of this 42 student.'}});
             };
     
             const selectedCluster = selectedClusters[0];
@@ -70,7 +77,7 @@ async function initAPI(client) {
     
             if (status === 'locked') {
                 if (LockSystemDB && LockSystemDB.status === 'locked') {
-                    return res.status(401).send('Utilisateur déjà détecté comme locked.\n');
+                    return client.sendStatus(res, 401, {data: {message: 'This 42 student status is already locked.'}});
                 };
                 
                 const lockedEmbed = client.baseEmbed()
@@ -102,9 +109,9 @@ async function initAPI(client) {
                 };           
             } else {
                 if (LockSystemDB && LockSystemDB.status === 'unlocked') {
-                    return res.status(401).send('Utilisateur déjà détecté comme unlocked.\n');
+                    return client.sendStatus(res, 401, {data: {message: 'This 42 student status is already unlocked.'}});
                 } else if ((now - LockSystemDB.lockedAt) < 500) {
-                    return res.status(401).send('Très rapide pour unlock, on essaie de spam l\'API ?\n');
+                    return client.sendStatus(res, 429, {data: {message: 'You made the request too fast!'}});
                 } else if (LockSystemDB && LockSystemDB.host === selectedCluster.host) {
                     client.updateIntoDatabase('42/LockSystem', {
                         status,
@@ -116,11 +123,11 @@ async function initAPI(client) {
                 };
             };
     
-            res.status(200).send('OK\n');
+            return client.sendStatus(res, 200, {data: {message: 'OK!'}});
         });
     
-        app.all('*', (_, res) => {
-            res.status(404).send('Il n\'y a rien ici...\n');
+        app.all('*', (req, res) => {
+            return client.sendStatus(res, req.method === 'GET' ? 404 : 405, {data: {url: req._parsedUrl.path}});
         });
     
         app.listen(process.env.API_PORT, () => {
