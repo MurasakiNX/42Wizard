@@ -6,14 +6,14 @@ require('dotenv').config();
  */
 async function generateAccessToken(client) {
     try {
-       const now = Date.now();
-       const FortyTwoDB = client.selectIntoDatabase('Client/FortyTwo', {id: 1});
+        const now = Date.now();
+        const FortyTwoDB = client.selectIntoDatabase('Client/FortyTwo', {id: 1});
 
-       if (!client.accessToken) {
-        client.accessToken = FortyTwoDB.accessToken;
-       };
+        if (!client.accessToken) {
+            client.accessToken = FortyTwoDB.accessToken;
+        };
        
-       if (now > (FortyTwoDB.lastUpdate + 1200000)) {
+        if (now > (FortyTwoDB.lastUpdate + 1200000)) {
             client.updateIntoDatabase('Client/FortyTwo', {lastUpdate: now}, {id: 1});
 
             const params = new URLSearchParams();
@@ -28,7 +28,7 @@ async function generateAccessToken(client) {
                 client.accessToken = jsonData.access_token;
                 console.log('✅ Token d\'accès à l\'API de 42 récupéré !');
             };
-       };
+        };
     } catch (err) {
         console.error(`❌ Erreur avec la fonction generateAccessToken: ${err}`);
     };
