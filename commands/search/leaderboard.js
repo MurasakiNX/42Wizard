@@ -8,7 +8,7 @@ const Leaderboard = new DiscordCommand({
 	category: '🔎 Search',
 	run: async (client, interaction) => {
 		const syncedUsers = client.selectAllIntoDatabase('42/Sync');
-		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
+		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => user.delogTimes || user.gotDeloggedTimes || syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
 
 		if (!UserDB.length) {
 			return await interaction.sendEmbed(client.createEmbed('Cannot find any 42 student to show...', {emote: 'zero', type: 'warning'}));	
