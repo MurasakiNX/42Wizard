@@ -7,7 +7,7 @@ const Leaderboard = new DiscordCommand({
 	description: 'Gives the leaderboard of the deloggers and their victims.',
 	category: '🔎 Search',
 	run: async (client, interaction) => {
-		const syncedUsers = client.selectAllIntoDatabase('42/Sync');
+		const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1});
 		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => user.delogTimes || user.gotDeloggedTimes || syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
 
 		if (!UserDB.length) {

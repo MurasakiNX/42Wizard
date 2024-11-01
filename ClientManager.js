@@ -43,7 +43,10 @@ CREATE TABLE Sync(
     discordUserId TEXT NOT NULL,
     fortyTwoUserId TEXT NOT NULL,
     dmChannelId TEXT NOT NULL,
-    syncKey TEXT NOT NULL
+    syncKey TEXT NOT NULL,
+    mailEnabled INTEGER NOT NULL,
+    verified INTEGER NOT NULL,
+    syncedAt INTEGER NOT NULL
 );
 
 CREATE TABLE LockSystem(

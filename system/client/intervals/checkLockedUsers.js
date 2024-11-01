@@ -22,6 +22,7 @@ async function checkLockedUsers(client) {
 
 			const FortyTwoSyncDB = client.selectIntoDatabase('42/Sync', {fortyTwoUserId});
 			const dmChannelId = FortyTwoSyncDB.dmChannelId;
+			const userMail = `${UserDB.login}@student.42.fr`;
 
 			if (clusterData) {
 				if (UserDB.userId == clusterData.user.id) {
@@ -34,6 +35,10 @@ async function checkLockedUsers(client) {
 						client.updateIntoDatabase('42/LockSystem', {
 							fiveMinutesReminded: 1,
 						}, {fortyTwoUserId});
+
+						if (FortyTwoSyncDB.mailEnabled) {
+							await client.sendMail(userMail, 'You are about to be deloggable (37 minutes elapsed)', `Be careful, you are about to be deloggable! Your host is currently at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a>`);
+						};
 	
 						await client.sendMessage(dmChannelId, reminderEmbed);
 					};
@@ -66,6 +71,10 @@ async function checkLockedUsers(client) {
 						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Delogger's login: **[${clusterData.user.login}](https://profile.intra.42.fr/users/${clusterData.user.login})**\n- Delogged after **${formattedElapsed}**\n\n- Delogger's delog time(s): **${delogTimes}**\n- You have been delogged **${gotDeloggedTimes}** time(s).`)
 						.setImage(delogGIF);
 
+					if (FortyTwoSyncDB.mailEnabled) {
+						await client.sendMail(userMail, 'A student has manually delogged you', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged by <a href="https://profile.intra.42.fr/users/${clusterData.user.login}" target="_blank" style="text-decoration: none; color:#00babc;">${clusterData.user.login}</a> after ${formattedElapsed} after you were deloggable.`);
+					};
+
 					client.updateIntoDatabase('42/LockSystem', {
 						status: 'unlocked',
 						unlockedAt: now,
@@ -84,12 +93,20 @@ async function checkLockedUsers(client) {
 						.setTitle('🔓 You have been delogged automatically (1 hour and 24 minutes elapsed)')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
+
+					if (FortyTwoSyncDB.mailEnabled) {
+						await client.sendMail(userMail, 'You have been delogged automatically (1 hour and 24 minutes elapsed)', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged automatically.`);
+					};
 					await client.sendMessage(dmChannelId, autoDeloggedEmbed);
 				} else if (elapsed >= 2520000) {
 					const deloggedEmbed = client.baseEmbed()
 						.setTitle('🔓 A unknown student has manually delogged you')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
+
+					if (FortyTwoSyncDB.mailEnabled) {
+						await client.sendMail(userMail, 'A unknown student has manually delogged you', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged manually by an unknown student.`);
+					};
 					await client.sendMessage(dmChannelId, deloggedEmbed);
 				};
 			};

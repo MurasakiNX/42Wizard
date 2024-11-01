@@ -16,6 +16,31 @@ async function initAPI(client) {
         app.use(bodyParser.json());
         app.use(cors());
 
+        app.get('/', (_, res) => {
+            return client.sendStatus(res, 200, {data: {message: 'Welcome to the 42Wizard API!'}});
+        });
+
+        app.use('/assets', express.static('system/api/assets'));
+
+        app.get('/confirm/:syncKey', async (req, res) => {
+            const syncKey = String(req.params.syncKey);
+
+            const syncData = client.selectIntoDatabase('42/Sync', {syncKey, verified: 0});
+            if (!syncData) {
+                return client.sendStatus(res, 401, {data: {message: 'Cannot find any 42 account with this key.'}});
+            };
+
+            const userData = client.selectIntoDatabase('42/Users', {userId: syncData.fortyTwoUserId});
+            const syncEmbed = client.baseEmbed()
+                .setTitle('✅ You have successfully linked your Discord account to your 42 account')
+                .setThumbnail(userData.image)
+                .setDescription(`- Login: **[${userData.login}](https://profile.intra.42.fr/users/${userData.login})**`);
+
+            await client.sendMessage(userData.dmChannelId, syncEmbed);
+            client.updateIntoDatabase('42/Sync', {verified: 1}, {syncKey});
+            return client.sendStatus(res, 200, {data: {message: '42 account verified successfully!'}});
+        });
+
         app.use((req, res, next) => {
             const ip = req.headers['x-forwarded-for'] || '0.0.0.0';
             const authorizedIPs = process.env.AUTHORIZED_IPS.split(',');
@@ -35,10 +60,6 @@ async function initAPI(client) {
             next();
         });
 
-        app.get('/', (_, res) => {
-            return client.sendStatus(res, 200, {data: {message: 'Welcome to the 42Wizard API!'}});
-        });
-
         app.post('/toggleLockStatus', async (req, res) => {
             const body = req.body;
             for (const key of ['status', 'userKey']) {
@@ -53,7 +74,7 @@ async function initAPI(client) {
             };
     
             const userKey = String(body.userKey);
-            const FortyTwoSyncDB = client.selectIntoDatabase('42/Sync', {syncKey: userKey});
+            const FortyTwoSyncDB = client.selectIntoDatabase('42/Sync', {syncKey: userKey, verified: 1});
     
             if (!FortyTwoSyncDB) {
                 return client.sendStatus(res, 401, {data: {message: 'Cannot find any 42 student with this authentication key.'}});

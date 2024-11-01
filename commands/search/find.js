@@ -8,7 +8,7 @@ const Find = new DiscordCommand({
         let selectedLogin = interaction.options.getString('login');
 
         if (!selectedLogin) {
-            const syncedUserData = client.selectIntoDatabase('42/Sync', {discordUserId: interaction.user.id});
+            const syncedUserData = client.selectIntoDatabase('42/Sync', {discordUserId: interaction.user.id, verified: 1});
             if (!syncedUserData) {
                 return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account yet... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
             };
@@ -35,6 +35,6 @@ const Find = new DiscordCommand({
 });
 
 Find.data
-    .addStringOption((option) => option.setName('login').setDescription('🆔 • The 42 account login of the user you are looking for. (By default, your account if linked).'));
+    .addStringOption((option) => option.setName('login').setDescription('🆔 • The 42 account login of the user you are looking for (By default, your account if linked).'));
 
 module.exports = Find;

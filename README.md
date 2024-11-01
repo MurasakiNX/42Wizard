@@ -1,11 +1,11 @@
 # 42Wizard
 
-**42Wizard** is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord when they are about to be deloggable. 
+**42Wizard** is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord (and mail if enabled) when they are about to be deloggable. 
 
 ## Functionnalities
 
 - **Connections lookup** : 42Wizard can detect when a student has clicked the lock button or if he is relogged.
-- **Notifications** : 42Wizard sends a message to a student 5 minutes via Discord before he is able to be delogged. If you have been delogged by another student, you will be notified.
+- **Notifications** : 42Wizard sends a message to a student 5 minutes via Discord (and mail if enabled) before he is able to be delogged. If you have been delogged by another student, you will be notified.
 - **Leaderboard system**: You can see who are the students that delog the most and who are they who got delogged the most.
 - **Find system**: You can get informations about a student (Where he is logged in at, how many times he delogged students and how many times he got delogged).
 

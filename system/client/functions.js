@@ -1,6 +1,8 @@
 const {deburr} = require('lodash');
 const {selectAllIntoDatabase, selectIntoDatabase, insertIntoDatabase, updateIntoDatabase, deleteIntoDatabase} = require('../../ClientManager');
 const {STATUS_CODES} = require('http');
+const {readFileSync} = require('fs');
+const nodemailer = require('nodemailer');
 
 /**
  * Initialise les fonctions globales du bot.
@@ -45,6 +47,31 @@ async function functions(client) {
         return res.status(status).json({...client.baseResponse, status, response: STATUS_CODES[status], ...sendData});
       };
       return res.status(status).send(sendData);
+    };
+
+    // E-mailing
+    client.sendMail = (to, subject, text) => {
+      return new Promise((resolve) => {
+        const transporter = nodemailer.createTransport({
+          host: process.env.EMAIL_HOST,
+          port: process.env.EMAIL_PORT,
+          secure: true,
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
+          }
+        });
+
+        transporter.sendMail({
+          from: process.env.EMAIL_USER,
+          to,
+          subject,
+          text,
+          html: readFileSync('email_template.html', 'utf8')
+                .replaceAll('$subject', subject)
+                .replace('$text', text)
+        }, (err) => resolve(!err));
+      });
     };
 
     // 42 API
