@@ -53,7 +53,7 @@ const Link = new DiscordCommand({
                 const validationEmbed = client.baseEmbed()
                     .setTitle('🔁 Linking your 42 account with you Discord account')
                     .setDescription(`- Login: **[${selectedLogin}](https://profile.intra.42.fr/users/${selectedLogin})**`)
-                    .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1302042088694747206/image.png');
+                    .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1302058850190360597/image.png');
 
                 const validation = await client.createValidation(interaction, validationEmbed, 'In order to make sure that this 42 account is your account, you will receive a confirmation link in your student mailbox. Do you confirm that ?');
                 if (!validation) return;
