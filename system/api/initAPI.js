@@ -17,8 +17,23 @@ async function initAPI(client) {
         app.use(cors());
     
         app.post('/42Wizard', async (req, res) => {
+            const ip = req.headers['x-forwarded-for'] || '0.0.0.0';
+            const authorizedIPs = process.env.AUTHORIZED_IPS.split(',');
+            const parts = ip.split('.');
+
+            if (!authorizedIPs.find((authorizedIP) => {
+                const authorizedParts = authorizedIP.split('.');
+                for (let i = 0; i < authorizedParts.length; i++) {
+                    if (parts[i] !== authorizedParts[i] && authorizedParts[i] !== 'X') {
+                        return false;
+                    };
+                };
+                return true;
+            })) {
+                return res.status(401).send('IP non autorisée.\n');
+            };
+
             const body = req.body;
-    
             for (const key of ['status', 'userKey']) {
                 if (!Object.keys(body).includes(key)) {
                   return res.status(401).send('Veuillez indiquer le status et le userKey dans la requête.\n');
