@@ -35,7 +35,7 @@ const Commands = new DiscordCommand({
     const selectedCommands = commands.filter((command) => client.compareText(command.name, selectedCommand)).slice(0, 20);
 
     if (!selectedCommands.length) {
-      return await interaction.sendEmbed(client.createEmbed('Cannot find a command with this command name.', {emote: 'hein', type: 'warning'}));
+      return await interaction.sendEmbed(client.createEmbed('Cannot find a command with this command name.', {emote: 'zero', type: 'warning'}));
     } else if (selectedCommands.length === 1) {
       selectedCommand = selectedCommands[0];
     } else {

@@ -7,7 +7,12 @@ const Leaderboard = new DiscordCommand({
 	description: 'Gives the leaderboard of the deloggers and their victims.',
 	category: '🔎 Search',
 	run: async (client, interaction) => {
-		const UserDB = client.selectAllIntoDatabase('42/Users');
+		const syncedUsers = client.selectAllIntoDatabase('42/Sync');
+		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
+
+		if (!UserDB.length) {
+			return await interaction.sendEmbed(client.createEmbed('Cannot find any 42 student to show...', {emote: 'zero', type: 'warning'}));	
+		};
 
 		const professionalDelogger = UserDB.sort((a, b) => b.delogTimes - a.delogTimes)[0];
 		const favouriteVictim = UserDB.sort((a, b) => b.gotDeloggedTimes - a.gotDeloggedTimes)[0];
@@ -41,7 +46,7 @@ const Leaderboard = new DiscordCommand({
 		};
 
 		if (pages.length === 1) {
-			return await interaction.sendEmbed(pages[0][0]);
+			return await interaction.sendEmbed(pages[0][0].embed);
 		};
 		return await client.createPagesSystem(interaction, pages, 'buttons');
 	},
