@@ -12,23 +12,23 @@ async function generateAccessToken(client) {
        if (!client.accessToken) {
         client.accessToken = FortyTwoDB.accessToken;
        };
-
+       
        if (now > (FortyTwoDB.lastUpdate + 1200000)) {
-        client.updateIntoDatabase('Client/FortyTwo', {lastUpdate: now}, {id: 1});
+            client.updateIntoDatabase('Client/FortyTwo', {lastUpdate: now}, {id: 1});
 
-        const params = new URLSearchParams();
-        params.append('grant_type', 'client_credentials');
-        params.append('client_id',  process.env['42_UID']);
-        params.append('client_secret', process.env['42_SECRET']);
+            const params = new URLSearchParams();
+            params.append('grant_type', 'client_credentials');
+            params.append('client_id',  process.env['42_UID']);
+            params.append('client_secret', process.env['42_SECRET']);
 
-        const data = await fetch('https://api.intra.42.fr/oauth/token', {method: 'POST', body: params});
-        if (data.ok) {
-            const jsonData = await data.json();
-            client.updateIntoDatabase('Client/FortyTwo', {accessToken: jsonData.access_token}, {id: 1});
-            client.accessToken = jsonData.access_token;
-            console.log('✅ Token d\'accès à l\'API de 42 récupéré !');
-        };
-    };
+            const data = await fetch('https://api.intra.42.fr/oauth/token', {method: 'POST', body: params});
+            if (data.ok) {
+                const jsonData = await data.json();
+                client.updateIntoDatabase('Client/FortyTwo', {accessToken: jsonData.access_token}, {id: 1});
+                client.accessToken = jsonData.access_token;
+                console.log('✅ Token d\'accès à l\'API de 42 récupéré !');
+            };
+       };
     } catch (err) {
         console.error(`❌ Erreur avec la fonction generateAccessToken: ${err}`);
     };
