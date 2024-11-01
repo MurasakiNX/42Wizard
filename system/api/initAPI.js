@@ -35,7 +35,7 @@ async function initAPI(client) {
                 .setTitle('✅ You have successfully linked your Discord account to your 42 account')
                 .setThumbnail(userData.image)
                 .setDescription(`- Login: **[${userData.login}](https://profile.intra.42.fr/users/${userData.login})**`)
-                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged, if you want to disable these mails, please use the </link toggle_mail:1301665165615304745> command!'});
+                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged. If you want to disable them, please use the </link toggle_mail:1301665165615304745> command!'});
 
             await client.sendMessage(syncData.dmChannelId, syncEmbed);
             client.updateIntoDatabase('42/Sync', {verified: 1}, {syncKey});
