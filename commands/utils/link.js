@@ -61,7 +61,7 @@ const Link = new DiscordCommand({
                 await interaction.sendEmbed(client.createEmbed('Sending the confimation mail...', {emote: 'chargement'}));
                 await client.waitForTimeout(250);
                 
-                if (!await client.sendMail(`${selectedLogin}@student.42.fr`, 'Link to a Discord account confirmation mail', `You have received this mail because someone wants to link his Discord account with your 42 account. If it is really you, please go to this link: <a href="https://42Wizard.fr/confirm/${syncKey}" target="_blank" style="text-decoration: none; color:#00babc;">https://42Wizard.fr/confirm/${syncKey}</a>, if not, please ignore this message (This link expires after 5 minutes).`)) {
+                if (!await client.sendMail(`${selectedLogin}@student.42.fr`, 'Link to a Discord account confirmation mail', `If you do not recognize this email, please ignore it. You can verify the link between your Discord account and your 42 account by following this link <a href="https://42Wizard.fr/confirm/${syncKey}" target="_blank" style="text-decoration: none; color:#00babc;">https://42Wizard.fr/confirm/${syncKey}</a> (This link will expire after 5 minutes)`)) {
                     return await interaction.sendEmbed(client.createEmbed('I was not able to send you the confirmation mail...', {emote: 'zero', type: 'warning'}));
                 };
 
@@ -75,7 +75,7 @@ const Link = new DiscordCommand({
                     syncedAt: Date.now()
                 });
 
-                await interaction.sendEmbed(client.createEmbed('A confirmation mail has been sent, you have 5 minutes to verify your 42 account (Don\'t forget to check the spams).', {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed(`A confirmation mail has been sent, you have 5 minutes to verify your 42 account (Don't forget to check the spams and make that the link you will receive ends with \`${syncKey.slice(-5)}\`).`, {emote: 'hundred', type: 'success'}));
                 break;
             };
 
