@@ -49,7 +49,7 @@ const Link = new DiscordCommand({
                     .setDescription(`- Login: **${selectedLogin}** *(In order to make sure that this 42 account is your account, you have to follow some steps)*\n- Steps:\n  - **Go** to this page: https://friends42.fr/settings/\n  - **Put** your Discord user ID \`${userId}\` on your bio.\n  - **Save** with the blue button.`)
                     .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1301017221040181299/image.png');
 
-                const validation = await client.createValidation(interaction, validationEmbed, 'Have you put your Discord userId on your Friends42 bio ?');
+                const validation = await client.createValidation(interaction, validationEmbed, 'Have you put your Discord user ID on your Friends42 bio ?');
                 if (!validation) return;
 
                 await interaction.sendEmbed(client.createEmbed('Checking the bio...', {emote: 'chargement'}));
