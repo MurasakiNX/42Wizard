@@ -46,7 +46,7 @@ const Link = new DiscordCommand({
 
                 const validationEmbed = client.baseEmbed()
                     .setTitle('🔁 Linking your 42 account with you Discord account')
-                    .setDescription(`- Login: **${selectedLogin}** *(In order to make sure that this 42 account is your account, you have to follow some steps)*\n- Steps:\n  - **Go** to this page: https://friends42.fr/settings/\n  - **Put** you Discord userId \`${userId}\` on your bio.\n  - **Save** with the blue button.`)
+                    .setDescription(`- Login: **${selectedLogin}** *(In order to make sure that this 42 account is your account, you have to follow some steps)*\n- Steps:\n  - **Go** to this page: https://friends42.fr/settings/\n  - **Put** your Discord user ID \`${userId}\` on your bio.\n  - **Save** with the blue button.`)
                     .setImage('https://cdn.discordapp.com/attachments/1300993150248157267/1301017221040181299/image.png');
 
                 const validation = await client.createValidation(interaction, validationEmbed, 'Have you put your Discord userId on your Friends42 bio ?');
@@ -81,7 +81,7 @@ const Link = new DiscordCommand({
                     syncKey
                 });
 
-                await interaction.sendEmbed(client.createEmbed(`Your Discord account has been linked with the \`${login}\` 42 account successfully!`, {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed(`Your Discord account has been linked with the \`${selectedLogin}\` 42 account successfully!`, {emote: 'hundred', type: 'success'}));
                 break;
             };
 
