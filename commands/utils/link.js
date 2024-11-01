@@ -75,7 +75,7 @@ const Link = new DiscordCommand({
                     syncedAt: Date.now()
                 });
 
-                await interaction.sendEmbed(client.createEmbed(`A confirmation mail has been sent, you have 5 minutes to verify your 42 account (Don't forget to check the spams and make that the link you will receive ends with \`${syncKey.slice(-5)}\`).`, {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed(`A confirmation mail has been sent, you have 5 minutes to verify your 42 account (Don't forget to check the spams and make sure that the link you will receive ends with \`${syncKey.slice(-5)}\`).`, {emote: 'hundred', type: 'success'}));
                 break;
             };
 
