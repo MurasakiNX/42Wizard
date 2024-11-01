@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
 const {time} = require('discord.js');
 require('dotenv').config();
 
@@ -24,6 +25,7 @@ async function initAPI(client) {
 
         app.get('/confirm/:syncKey', async (req, res) => {
             const syncKey = String(req.params.syncKey);
+            const newSyncKey = crypto.randomBytes(32).toString('hex').slice(0, 32);
 
             const syncData = client.selectIntoDatabase('42/Sync', {syncKey, verified: 0});
             if (!syncData) {
@@ -35,10 +37,10 @@ async function initAPI(client) {
                 .setTitle('✅ You have successfully linked your Discord account to your 42 account')
                 .setThumbnail(userData.image)
                 .setDescription(`- Login: **[${userData.login}](https://profile.intra.42.fr/users/${userData.login})**`)
-                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged. If you want to disable them, please use the </link toggle_mail:1301665165615304745> command!'});
+                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged. If you want to disable them, please use the </link toggle_mail:1301665165615304745> command! To setup the lock system, please use the </link lock_system:1301665165615304745> command!'});
 
             await client.sendMessage(syncData.dmChannelId, syncEmbed);
-            client.updateIntoDatabase('42/Sync', {verified: 1}, {syncKey});
+            client.updateIntoDatabase('42/Sync', {syncKey: newSyncKey, verified: 1}, {syncKey});
             return client.sendStatus(res, 200, {data: {message: '42 account verified successfully!'}});
         });
 
