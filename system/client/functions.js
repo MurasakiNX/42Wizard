@@ -69,7 +69,7 @@ async function functions(client) {
           text,
           html: readFileSync('email_template.html', 'utf8')
                 .replaceAll('$subject', subject)
-                .replace('$text', text)
+                .replace('$text', text.replaceAll('\n', '<br/>'))
         }, (err) => resolve(!err));
       });
     };
