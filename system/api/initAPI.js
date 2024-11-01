@@ -36,7 +36,7 @@ async function initAPI(client) {
                 .setThumbnail(userData.image)
                 .setDescription(`- Login: **[${userData.login}](https://profile.intra.42.fr/users/${userData.login})**`);
 
-            await client.sendMessage(userData.dmChannelId, syncEmbed);
+            await client.sendMessage(syncData.dmChannelId, syncEmbed);
             client.updateIntoDatabase('42/Sync', {verified: 1}, {syncKey});
             return client.sendStatus(res, 200, {data: {message: '42 account verified successfully!'}});
         });
