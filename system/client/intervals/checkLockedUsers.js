@@ -100,12 +100,12 @@ async function checkLockedUsers(client) {
 					await client.sendMessage(dmChannelId, autoDeloggedEmbed);
 				} else if (elapsed >= 2520000) {
 					const deloggedEmbed = client.baseEmbed()
-						.setTitle('🔓 A unknown student has manually delogged you')
+						.setTitle('🔓 An unknown student has manually delogged you')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 
 					if (FortyTwoSyncDB.mailEnabled) {
-						await client.sendMail(userMail, 'A unknown student has manually delogged you', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged manually by an unknown student (Or maybe by the almighty cat 🐱🐱🐱).`);
+						await client.sendMail(userMail, 'An unknown student has manually delogged you', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged manually by an unknown student (Or maybe by the almighty cat 🐱🐱🐱).`);
 					};
 					await client.sendMessage(dmChannelId, deloggedEmbed);
 				};
