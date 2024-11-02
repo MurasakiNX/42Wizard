@@ -61,7 +61,7 @@ const Link = new DiscordCommand({
                 await interaction.sendEmbed(client.createEmbed('Sending the confimation mail...', {emote: 'chargement'}));
                 await client.waitForTimeout(250);
                 
-                if (!await client.sendMail(`${selectedLogin}@student.42.fr`, 'Link to a Discord account confirmation mail', `If you do not recognize this mail, please ignore it.\nYou can verify the link between your Discord account and your 42 account by following this link: <a href="https://42Wizard.fr/confirm/${syncKey}" target="_blank" style="text-decoration: none; color:#00babc;">https://42Wizard.fr/confirm/${syncKey}</a>\n(This link will expire after 5 minutes)`)) {
+                if (!await client.sendMail(`${selectedLogin}@student.42.fr`, 'Link to a Discord account confirmation mail', `If you do not recognize this mail, please ignore it.\nYou can verify the link between your Discord account and your 42 account by following this link\n<a href="https://42Wizard.fr/confirm/${syncKey}" target="_blank" style="text-decoration: none; color:#00babc;">https://42Wizard.fr/confirm/${syncKey}</a>\n(This link will expire after 5 minutes)`)) {
                     return await interaction.sendEmbed(client.createEmbed('I was not able to send you the confirmation mail...', {emote: 'zero', type: 'warning'}));
                 };
 
