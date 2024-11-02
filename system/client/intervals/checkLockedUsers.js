@@ -90,12 +90,12 @@ async function checkLockedUsers(client) {
 
 				if (elapsed >= 5040000) {
 					const autoDeloggedEmbed = client.baseEmbed()
-						.setTitle('🔓 You have been delogged automatically (1 hour and 24 minutes elapsed)')
+						.setTitle('🔓 You have been delogged automatically (1 hour 24 minutes elapsed)')
 						.setThumbnail(UserDB.image)
 						.setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**`);
 
 					if (FortyTwoSyncDB.mailEnabled) {
-						await client.sendMail(userMail, 'You have been delogged automatically (1 hour and 24 minutes elapsed)', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged automatically.`);
+						await client.sendMail(userMail, 'You have been delogged automatically (1 hour 24 minutes elapsed)', `Your host at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a> has been delogged automatically.`);
 					};
 					await client.sendMessage(dmChannelId, autoDeloggedEmbed);
 				} else if (elapsed >= 2520000) {
