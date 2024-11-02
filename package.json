@@ -1,6 +1,6 @@
 {
   "name": "42wizard",
-  "version": "2.0",
+  "version": "2.0.0",
   "description": "42Wizard is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord (and mail if enabled) when they are about to be deloggable.",
   "main": "client.js",
   "scripts": {
