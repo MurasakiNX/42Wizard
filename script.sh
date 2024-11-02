@@ -28,7 +28,7 @@ send_http_request() {
     formatted_response=$(echo "$response_body" | jq -c .data.message)
 
     if [[ "$http_code" -ne 200 ]]; then
-        notify "[ERROR]: Failed to send status '$status' to the 42Wizard API: $formatted_response"
+        notify "[ERROR]: $formatted_response"
     fi
 }
 
