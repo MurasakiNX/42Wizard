@@ -107,7 +107,7 @@ async function initAPI(client) {
                 const lockedEmbed = client.baseEmbed()
                     .setTitle('🔒 You have locked your session')
                     .setThumbnail(client.userAvatar)
-                    .setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Locked: ${time(Math.round(now / 1000), 'R')}\n- Deloggable: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Auto delog: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*You will receive a message **5 minutes** before you are about to be deloggable.*`);
+                    .setDescription(`- Host: **[${host}](https://meta.intra.42.fr/clusters#${host})**\n- Locked: ${time(Math.round(now / 1000), 'R')}\n- Deloggable: ${time(Math.round(now / 1000) + 2520, 'R')}\n- Auto delog: ${time(Math.round(now / 1000) + 5040, 'R')}\n\n*You will receive a message (and a mail if enabled) **5 minutes** before you are about to be deloggable.*`);
 
                 const message = await client.sendMessage(FortyTwoSyncDB.dmChannelId, lockedEmbed);
 
