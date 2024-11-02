@@ -42,6 +42,23 @@ async function initAPI(client) {
             return client.sendStatus(res, 200, {data: {message: '42 account verified successfully!'}});
         });
 
+        app.get('/getAwardedStudents', (_, res) => {
+            const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1});
+            const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => user.delogTimes || user.gotDeloggedTimes || syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
+
+            if (!UserDB.length) {
+                return client.sendStatus(res, 401, {data: {message: 'Cannot find any 42 student to show.'}});
+            };
+
+            const professionalDelogger = UserDB.sort((a, b) => b.delogTimes - a.delogTimes)[0];
+		    const favouriteVictim = UserDB.sort((a, b) => b.gotDeloggedTimes - a.gotDeloggedTimes)[0];
+
+            return client.sendStatus(res, 200, {data: {
+                professionalDelogger: {userId: professionalDelogger.userId, delogTimes: professionalDelogger.delogTimes},
+                favouriteVictim: {userId: favouriteVictim.userId, gotDeloggedTimes: favouriteVictim.gotDeloggedTimes}
+            }});
+        });
+
         // Private
         app.use((req, res, next) => {
             const ip = req.ip || '0.0.0.0';
