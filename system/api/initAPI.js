@@ -16,7 +16,8 @@ async function initAPI(client) {
         app.use(bodyParser.urlencoded({extended: false}));
         app.use(bodyParser.json());
         app.use(cors());
-
+        app.set('trust proxy', '127.0.0.1');
+        
         // Public
         app.use('/assets', express.static('system/api/assets'));
 
@@ -43,7 +44,7 @@ async function initAPI(client) {
 
         // Private
         app.use((req, res, next) => {
-            const ip = req.headers['x-forwarded-for'] || '0.0.0.0';
+            const ip = req.ip || '0.0.0.0';
             const authorizedIPs = process.env.AUTHORIZED_IPS.split(',');
             const parts = ip.split('.');
 
