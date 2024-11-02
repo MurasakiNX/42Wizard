@@ -17,10 +17,7 @@ async function initAPI(client) {
         app.use(bodyParser.json());
         app.use(cors());
 
-        app.get('/', (_, res) => {
-            return client.sendStatus(res, 200, {data: {message: 'Welcome to the 42Wizard API!'}});
-        });
-
+        // Public
         app.use('/assets', express.static('system/api/assets'));
 
         app.get('/confirm/:syncKey', async (req, res) => {
@@ -44,6 +41,7 @@ async function initAPI(client) {
             return client.sendStatus(res, 200, {data: {message: '42 account verified successfully!'}});
         });
 
+        // Private
         app.use((req, res, next) => {
             const ip = req.headers['x-forwarded-for'] || '0.0.0.0';
             const authorizedIPs = process.env.AUTHORIZED_IPS.split(',');
@@ -61,6 +59,10 @@ async function initAPI(client) {
                 return client.sendStatus(res, 401, {data: {message: 'The 42Wizard API is not accessible for this IP address.'}});
             };
             next();
+        });
+
+        app.get('/', (_, res) => {
+            return client.sendStatus(res, 200, {data: {message: 'Welcome to the 42Wizard API!'}});
         });
 
         app.post('/toggleLockStatus', async (req, res) => {
