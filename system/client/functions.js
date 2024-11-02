@@ -67,7 +67,7 @@ async function functions(client) {
         });
 
         transporter.sendMail({
-          from: process.env.EMAIL_USER,
+          from: `42Wizard <${process.env.EMAIL_USER}>`,
           to,
           subject,
           text: client.removeHTMLTagsFromText(text),
