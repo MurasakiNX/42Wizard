@@ -37,7 +37,7 @@ async function checkLockedUsers(client) {
 						}, {fortyTwoUserId});
 
 						if (FortyTwoSyncDB.mailEnabled) {
-							await client.sendMail(userMail, 'You are about to be deloggable (37 minutes elapsed)', `Be careful, you are about to be deloggable! Your host is currently at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a>`);
+							await client.sendMail(userMail, 'You are about to be deloggable (37 minutes elapsed)', `Be careful, you are about to be deloggable!\nYour host is currently at <a href="https://meta.intra.42.fr/clusters#${host}" target="_blank" style="text-decoration: none; color:#00babc;">${host}</a>`);
 						};
 	
 						await client.sendMessage(dmChannelId, reminderEmbed);
