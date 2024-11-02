@@ -27,6 +27,10 @@ async function functions(client) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     };
 
+    client.removeHTMLTagsFromText = (text) => {
+      return text.replace(/(<([^>]+)>)/g, '');
+    };
+
     client.splitArrayByParts = (array, parts=10) => {
         const result = [[]];
     
@@ -66,7 +70,7 @@ async function functions(client) {
           from: process.env.EMAIL_USER,
           to,
           subject,
-          text,
+          text: client.removeHTMLTagsFromText(text),
           html: readFileSync('email_template.html', 'utf8')
                 .replaceAll('$subject', subject)
                 .replace('$text', text.replaceAll('\n', '<br/>'))
