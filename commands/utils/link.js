@@ -93,7 +93,7 @@ const Link = new DiscordCommand({
                 if (!validation) return;
 
                 client.updateIntoDatabase('42/Sync', {syncKey}, {discordUserId: userId});
-                await interaction.sendEmbed(client.createEmbed(`The authentication has been resetted successfully and has been replaced by \`${syncKey}\`. Don't forget to edit your \`userKey\` file and to relog.`, {emote: 'hundred', type: 'warning'}));
+                await interaction.sendEmbed(client.createEmbed(`The authentication has been resetted successfully and has been replaced by \`${syncKey}\`. Don't forget to edit your \`userKey\` file.`, {emote: 'hundred', type: 'warning'}));
                 break;
             };
 
