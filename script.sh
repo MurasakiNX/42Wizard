@@ -25,7 +25,7 @@ send_http_request() {
         -d "{\"status\": \"$status\", \"userKey\": \"$user_key\"}" https://42Wizard.fr/toggleLockStatus)
     http_code="${response: -3}"
     response_body=$(cat /tmp/curl_response_output)
-    formatted_response=$(echo "$response_body" | jq -c .data.message)
+    formatted_response=$(echo "$response_body" | jq -c -r .data.message)
 
     if [[ "$http_code" -ne 200 ]]; then
         notify "[ERROR]: $formatted_response"
