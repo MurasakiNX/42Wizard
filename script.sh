@@ -29,8 +29,6 @@ send_http_request() {
 
     if [[ "$http_code" -ne 200 ]]; then
         notify "[ERROR]: Failed to send status '$status' to the 42Wizard API. $formatted_response"
-    else
-        notify "[INFO]: Status '$status' sent to the 42Wizard API successfully."
     fi
 }
 
