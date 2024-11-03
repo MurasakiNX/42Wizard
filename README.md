@@ -34,7 +34,7 @@
 - **(Private) Only accessible from a cluster host**
     - **GET** [/](https://42wizard.fr/) : Only to test if the access is well protected.
     - **POST /toogleLockStatus** `{status: "The status, locked or unlocked", userKey: "The student authentication key"}` : Called by the `script.sh`, this part of the API executes the appropriate actions depending on the status of the student's host.
-    - **ALL** : Just sends and 404/405 JSON error response according to the request method.
+    - **ALL** : Just sends a 404/405 error response according to the request method.
 
 Reponse format: `JSON`
 ```js
