@@ -27,15 +27,14 @@
 - The base link of 42Wizard is `https://42wizard.fr/`
 
 - **(Public)**
-- **GET** [/assets](https://42wizard.fr/assets) : Can only get the avatar of 42Wizard for the mails (at [/assets/resized_avatar.png](https://42wizard.fr/assets/resized_avatar.png)).
-- **GET [/confirm/:syncKey](https://42wizard.fr/confirm)** : The system that verifies the link between a Discord account and a 42 account via mail.
-- **GET [/getAwardedStudents](https://42wizard.fr/getAwardedStudents)** : Gives the `😈👑 Professional Delogger` student and the favourite victim if another system requires that information (To get a title, why not ?).
+    - **GET** [/assets](https://42wizard.fr/assets) : Can only get the avatar of 42Wizard for the mails (at [/assets/resized_avatar.png](https://42wizard.fr/assets/resized_avatar.png)).
+    - **GET [/confirm/:syncKey](https://42wizard.fr/confirm)** : The system that verifies the link between a Discord account and a 42 account via mail.
+    - **GET [/getAwardedStudents](https://42wizard.fr/getAwardedStudents)** : Gives the `😈👑 Professional Delogger` student and the favourite victim if another system requires that information (To get a title, why not ?).
 
 - **(Private) Only accessible from a cluster host**
-- **GET** [/](https://42wizard.fr/) : Only to test if the access is well protected.
-- **POST /toogleLockStatus** `{status: "The status, locked or unlocked", userKey: "The student authentication key"}` : Called by the `script.sh`, this part of the API executes the appropriate actions depending on the status of the student's host.
-
-- **ALL** : Just sends and 404/405 JSON error response according to the request method.
+    - **GET** [/](https://42wizard.fr/) : Only to test if the access is well protected.
+    - **POST /toogleLockStatus** `{status: "The status, locked or unlocked", userKey: "The student authentication key"}` : Called by the `script.sh`, this part of the API executes the appropriate actions depending on the status of the student's host.
+    - **ALL** : Just sends and 404/405 JSON error response according to the request method.
 
 Reponse format: `JSON`
 ```js
