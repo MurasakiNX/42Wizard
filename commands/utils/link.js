@@ -37,7 +37,7 @@ const Link = new DiscordCommand({
                         return await interaction.sendEmbed(client.createEmbed('Please verify your account by checking your mails, if the 42 account you have specified is incorrect, please remove it by using the </link unlink:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
                     };
                     const {login} = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId}); 
-                    return await interaction.sendEmbed(client.createEmbed(`You Discord account is already linked with [${login}](https://profile.intra.42.fr/users/${login}) 42 account...`, {emote: 'zero', type: 'warning'}));
+                    return await interaction.sendEmbed(client.createEmbed(`Your Discord account is already linked with [${login}](https://profile.intra.42.fr/users/${login}) 42 account...`, {emote: 'zero', type: 'warning'}));
                 };
 
                 const selectedLogin = interaction.options.getString('login');

@@ -44,9 +44,9 @@ const interactionCreate = new Event({
 
     if (!client.isClientOwner(interaction.user.id)) {
       if (ownerOnly) {
-        return await interaction.sendEmbed(client.createEmbed('You can\'t use this command...', {emote: 'zero', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('This command is not available to you and will be of absolutely useless to you....', {emote: 'zero', type: 'warning'}));
       } else if (client.maintenance) {
-        return await interaction.sendEmbed(client.createEmbed('There is a maintenace operation, please wait (Sorry)...', {emote: 'zero', type: 'warning'}));
+        return await interaction.sendEmbed(client.createEmbed('There is currently a maintenance operation on the BOT, please wait for it to be finished (Sorry for the inconvenience)...', {emote: 'zero', type: 'warning'}));
       };
     };
 
