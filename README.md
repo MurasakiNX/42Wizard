@@ -25,7 +25,6 @@
 ## Mini-API
 
 - The base link of 42Wizard is https://42wizard.fr/
-
 - **(Public)**
     - **GET** [/assets](https://42wizard.fr/assets) : Can only get the avatar of 42Wizard for the mails (at [/assets/resized_avatar.png](https://42wizard.fr/assets/resized_avatar.png)).
     - **GET [/confirm/:syncKey](https://42wizard.fr/confirm)** : The system that verifies the link between a Discord account and a 42 account via mail.
