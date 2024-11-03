@@ -24,7 +24,7 @@
 
 ## Mini-API
 
-- The base link of 42Wizard is `https://42wizard.fr/`
+- The base link of 42Wizard is https://42wizard.fr/
 
 - **(Public)**
     - **GET** [/assets](https://42wizard.fr/assets) : Can only get the avatar of 42Wizard for the mails (at [/assets/resized_avatar.png](https://42wizard.fr/assets/resized_avatar.png)).
