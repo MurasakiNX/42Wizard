@@ -23,6 +23,7 @@
 - **/link** : Commands to manage the link between your Discord and your 42 account.
 
 # Disclaimer
+
 **⚠️ This tool isn't intended to promote delogging people, it's just for fun. If abuse is detected, the people involved will be banned from the system or the service will cease to exist. Please, don't abuse, be serious and respectful to your mates. ⚠️**
 
 By murasakinx (mel-habi)
