@@ -22,6 +22,33 @@
 - **/commands** : Gives informations about 42Wizard commands.
 - **/link** : Commands to manage the link between your Discord and your 42 account.
 
+## Mini-API
+
+- The base link of 42Wizard is `https://42wizard.fr/`
+
+- **(Public)**
+- **GET** [/assets](https://42wizard.fr/assets) : Can only get the avatar of 42Wizard for the mails (at [/assets/resized_avatar.png](https://42wizard.fr/assets/resized_avatar.png)).
+- **GET [/confirm/:syncKey](https://42wizard.fr/confirm)** : The system that verifies the link between a Discord account and a 42 account via mail.
+- **GET [/getAwardedStudents](https://42wizard.fr/getAwardedStudents)** : Gives the `😈👑 Professional Delogger` student and the favourite victim if another system requires that information (To get a title, why not ?).
+
+- **(Private) Only accessible from a cluster host**
+- **GET** [/](https://42wizard.fr/) : Only to test if the access is well protected.
+- **POST /toogleLockStatus** `{status: "The status, locked or unlocked", userKey: "The student authentication key"}` : Called by the `script.sh`, this part of the API executes the appropriate actions depending on the status of the student's host.
+
+- **ALL** : Just sends and 404/405 JSON error response according to the request method.
+
+Reponse format: `JSON`
+```js
+{
+    status: "number: The status code of the response",
+    response: "string: The string version of the status code (e.g. if status is 404, response will be Not Found)",
+    data: null or {
+        "message": "string or undefined: the message of an error, if occurred",
+        "all the data depending of the request."
+    }
+}
+```
+
 ## Disclaimer
 
 **⚠️ This tool isn't intended to promote delogging people, it's just for fun. If abuse is detected, the people involved will be banned from the system or the service will cease to exist. Please, don't abuse, be serious and respectful to your mates. ⚠️**
