@@ -47,6 +47,13 @@ Reponse format: `JSON`
 }
 ```
 
+## Settings
+
+- **/link toggle_enabled**: You can disable or enable the system when you want (You will no longer receive mails or messages but stats can change).
+- **/link toggle_mail**: You can enable or disable mails from 42Wizard.
+- **/link toggle_avatar**: If you don't want 42Wizard to store the link to your avatar (your photo), you can do it.
+- **/link toggle_hidden**: If you want to use 42Wizard but do not want to be visible from the other students (on find command or on the leaderboard), you can do it.
+
 ## Disclaimer
 
 **⚠️ This tool isn't intended to promote delogging people, it's just for fun. If abuse is detected, the people involved will be banned from the system or the service will cease to exist. Please, don't abuse, be serious and respectful to your mates. ⚠️**
