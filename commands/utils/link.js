@@ -197,9 +197,9 @@ Link.data
     .addSubcommand((subcommand) => subcommand.setName('setup').setDescription('🔄️ • Links your Discord account with your 42 account.').addStringOption((option) => option.setName('login').setDescription('🆔 • Your 42 login.').setRequired(true)))
     .addSubcommand((subcommand) => subcommand.setName('my_settings').setDescription('⚙️• Gives your 42Wizard settings.'))
     .addSubcommand((subcommand) => subcommand.setName('reset_auth_key').setDescription('🔁 • Resets your authentication key (For the lock system).'))
-    .addSubcommand((subcommand) => subcommand.setName('toggle_mail').setDescription('✅/❌ • Enables or disables 42Wizard mails for your account.'))
-    .addSubcommand((subcommand) => subcommand.setName('toggle_avatar').setDescription('✅/❌ • Enables or disables 42Wizard to show your avatar on its commands.'))
-    .addSubcommand((subcommand) => subcommand.setName('toggle_hidden').setDescription('✅/❌ • Hide or show your account to the students.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_mail').setDescription('✉️ • Enables or disables 42Wizard mails for your account.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_avatar').setDescription('🖼️ • Enables or disables 42Wizard to show your avatar on its commands.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_hidden').setDescription('👻 • Hide or show your account to the students.'))
     .addSubcommand((subcommand) => subcommand.setName('toggle_enabled').setDescription('✅/❌ • Enables or disables the system on your account.'))
     .addSubcommand((subcommand) => subcommand.setName('unlink').setDescription('🗑️• Unlinks your Discord account with you 42 account.'));
 
