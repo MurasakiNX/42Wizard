@@ -155,7 +155,7 @@ const Link = new DiscordCommand({
 
                 client.updateIntoDatabase('42/Sync', {hidden: Number(!FortyTwoSyncDB.hidden)}, {discordUserId: userId});
 
-                await interaction.sendEmbed(client.createEmbed(`Your are now \`${FortyTwoSyncDB.hidden ? 'hidden' : 'visible'}\` from the other students!`, {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed(`Your are now \`${FortyTwoSyncDB.hidden ? 'visible' : 'hidden'}\` from the other students!`, {emote: 'hundred', type: 'success'}));
                 break;
             };
 
