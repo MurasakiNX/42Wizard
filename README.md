@@ -56,7 +56,7 @@ Reponse format: `JSON`
 
 ## How the 42 data is used ?
 
-Every 42 seconds, 42Wizard scans all the clusters on the Paris campus, storing cluster informations (cluster ID, host name) as well as information about the user connected to the host (login and avatar (photo)). A student not connected to 42Wizard will have his avatar set to a default avatar (Stormtrooper from Star Wars). The same applies to a student who doesn't want his avatar to be visible. These informations are then used to find out who is connected, when and where. There are also stored internally, in SQL databases (You can see how databases are made on 42Wizard by checking the ClientManager.js file). No highly confidential personal informations are stored, to respect the students and because they are simply useless to 42Wizard.
+Every 42 seconds, 42Wizard scans all the clusters on the Paris campus, storing cluster informations (cluster ID, host name) as well as information about the user connected to the host (login and avatar (photo)). A student not connected to 42Wizard will have his avatar set to a default avatar (Stormtrooper from Star Wars). The same applies to a student who doesn't want his avatar to be visible. These informations are then used to find out who is connected, when and where. They are also stored internally, in SQL databases (You can see how databases are made on 42Wizard by checking the ClientManager.js file). No highly confidential personal informations are stored, to respect the students and because they are simply useless to 42Wizard.
 
 The commands in the "Settings" section allow you to make your own privacy choices.
 
