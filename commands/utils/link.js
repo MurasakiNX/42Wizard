@@ -142,7 +142,7 @@ const Link = new DiscordCommand({
                     client.updateIntoDatabase('42/Users', {image: client.defaultAvatar}, {userId: FortyTwoSyncDB.fortyTwoUserId});
                 };
 
-                await interaction.sendEmbed(client.createEmbed(`Your avatar on 42Wizard commands is now \`${FortyTwoSyncDB.avatarEnabled ? 'not visible' : 'visible'}\`! If it is now visible, you have to wait a few seconds and be connected on a host to see it.`, {emote: 'hundred', type: 'success'}));
+                await interaction.sendEmbed(client.createEmbed(`Your avatar on 42Wizard is now \`${FortyTwoSyncDB.avatarEnabled ? 'not visible' : 'visible'}\`! If it is now visible, you have to wait a few seconds and be connected on a host to see it.`, {emote: 'hundred', type: 'success'}));
                 break;
             };
 
