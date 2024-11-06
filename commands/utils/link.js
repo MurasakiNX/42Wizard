@@ -70,7 +70,7 @@ const Link = new DiscordCommand({
                     dmChannelId: interaction.channelId,
                     syncKey,
                     mailEnabled: 1,
-                    avatarEnabled: 1,
+                    avatarEnabled: 0,
                     hidden: 0,
                     enabled: 1,
                     verified: 0,
@@ -90,7 +90,7 @@ const Link = new DiscordCommand({
 
                 const UserDB = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId});
                 const mySettingsEmbed = client.baseEmbed()
-                    .setTitle('⚙️ My 42Wiward settings')
+                    .setTitle('⚙️ My 42Wizard settings')
                     .setThumbnail(UserDB.image)
                     .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n**Settings**\n- System: **${FortyTwoSyncDB.enabled ? "✅ Enabled" : "❌ Disabled"}**\n- Mails: **${FortyTwoSyncDB.mailEnabled ? "✅ Enabled" : "❌ Disabled"}**\n- Avatar: **${FortyTwoSyncDB.avatarEnabled ? "✅ Visible" : "❌ Not visible"}**\n- Hidden status: **${FortyTwoSyncDB.hidden ? "❌ Hidden" : "✅ Visible"} from the other students**`);
 
