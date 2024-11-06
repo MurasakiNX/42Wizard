@@ -60,10 +60,10 @@ Every 42 seconds, 42Wizard scans all the clusters on the Paris campus, storing c
 
 The commands in the "Settings" section allow you to make your own privacy choices.
 
-If you still have questions about this, feel free to read the source code or ask directly on Discord to (murasakinx, login 42: mel-habi).
+If you still have questions about this, feel free to read the source code or ask directly on Discord to (murasakinx, [mel-habi](https://profile.intra.42.fr/users/mel-habi)).
 
 ## Disclaimer
 
 **⚠️ This tool isn't intended to promote delogging people, it's just for fun. If abuse is detected, the people involved will be banned from the system or the service will cease to exist. Please, don't abuse, be serious and respectful to your mates. ⚠️**
 
-By murasakinx (mel-habi)
+By [murasakinx](https://github.com/MurasakiNX) ([mel-habi](https://profile.intra.42.fr/users/mel-habi))
