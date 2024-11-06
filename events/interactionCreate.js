@@ -42,12 +42,16 @@ const interactionCreate = new Event({
     const commandName = `${selectedCommand.name}${subcommandGroup ? ' ' + subcommandGroup : ''}${subcommand ? ' ' + subcommand : ''}`;
     const cooldownName = commandName.split(' ').join('_');
 
-    if (!client.isClientOwner(interaction.user.id)) {
+    if (!client.isClientOwner(userId)) {
       if (ownerOnly) {
         return await interaction.sendEmbed(client.createEmbed('This command is not available to you and will be of absolutely useless to you....', {emote: 'zero', type: 'warning'}));
       } else if (client.maintenance) {
         return await interaction.sendEmbed(client.createEmbed('There is currently a maintenance operation on the BOT, please wait for it to be finished (Sorry for the inconvenience)...', {emote: 'zero', type: 'warning'}));
       };
+    };
+
+    if (interaction.commandName !== 'link' && !client.selectIntoDatabase('42/Sync', {discordUserId: userId, verified: 1})) {
+      return await interaction.sendEmbed(client.createEmbed('You must have linked your 42 account with your Discord account to use commands... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
     };
 
     const userCooldown = client.selectIntoDatabase('Cooldowns/Discord', {commandName: cooldownName, userId});

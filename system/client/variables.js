@@ -11,6 +11,8 @@ async function variables(client) {
         response: null,
         data: null,
     };
+
+    client.defaultAvatar = 'https://cdn.discordapp.com/attachments/1300993150248157267/1303524368248209439/user.png';
     await require('./discord/variables')(client);
 };
 

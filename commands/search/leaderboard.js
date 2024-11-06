@@ -7,8 +7,8 @@ const Leaderboard = new DiscordCommand({
 	description: 'Gives the leaderboard of the deloggers and their victims.',
 	category: '🔎 Search',
 	run: async (client, interaction) => {
-		const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1});
-		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => user.delogTimes || user.gotDeloggedTimes || syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
+		const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1, enabled: 1, hidden: 0});
+		const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId) && (user.delogTimes || user.gotDeloggedTimes));
 
 		if (!UserDB.length) {
 			return await interaction.sendEmbed(client.createEmbed('Cannot find any 42 student to show...', {emote: 'zero', type: 'warning'}));	

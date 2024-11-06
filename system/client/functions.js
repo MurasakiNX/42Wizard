@@ -81,6 +81,7 @@ async function functions(client) {
     // 42 API
     client.getParisCampusLocations = async () => {
       const output = [];
+      const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1});
 
       const params = new URLSearchParams();
       params.append('campus_id', '1');
@@ -113,10 +114,13 @@ async function functions(client) {
             continue;
           };
           const {login, image} = user;
+          const userId = String(user.id);
+          const syncData = syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === userId);
+
           output.push({id: String(id), host, user: {
-            id: String(user.id),
+            id: userId,
             login,
-            image: image.link,
+            image: (syncData && syncData.avatarEnabled) ? image.link : client.defaultAvatar,
           }});
         };
 

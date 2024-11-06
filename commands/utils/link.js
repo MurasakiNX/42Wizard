@@ -70,11 +70,31 @@ const Link = new DiscordCommand({
                     dmChannelId: interaction.channelId,
                     syncKey,
                     mailEnabled: 1,
+                    avatarEnabled: 1,
+                    hidden: 0,
+                    enabled: 1,
                     verified: 0,
                     syncedAt: Date.now()
                 });
 
                 await interaction.sendEmbed(client.createEmbed(`A confirmation mail has been sent, you have 5 minutes to verify your 42 account (Don't forget to check the spams and make sure that the link you will receive ends with \`${syncKey.slice(-5)}\`). If you have made a mistake, please unlink your account by using the </link unlink:1301665165615304745> command!`, {emote: 'hundred', type: 'success'}));
+                break;
+            };
+
+            case 'my_settings': {
+                if (!FortyTwoSyncDB) {
+                    return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account yet... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                } else if (!FortyTwoSyncDB.verified) {
+                    return await interaction.sendEmbed(client.createEmbed('Please verify your account by checking your mails, if the 42 account you have specified is incorrect, please remove it by using the </link unlink:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                };
+
+                const UserDB = client.selectIntoDatabase('42/Users', {userId: FortyTwoSyncDB.fortyTwoUserId});
+                const mySettingsEmbed = client.baseEmbed()
+                    .setTitle('⚙️ My 42Wiward settings')
+                    .setThumbnail(UserDB.image)
+                    .setDescription(`- Login: **[${UserDB.login}](https://profile.intra.42.fr/users/${UserDB.login})**\n**Settings**\n- System: **${FortyTwoSyncDB.enabled ? "✅ Enabled" : "❌ Disabled"}**\n- Mails: **${FortyTwoSyncDB.mailEnabled ? "✅ Enabled" : "❌ Disabled"}**\n- Avatar: **${FortyTwoSyncDB.avatarEnabled ? "✅ Visible" : "❌ Not visible"}**\n- Hidden status: **${FortyTwoSyncDB.hidden ? "❌ Hidden" : "✅ Visible"} from the other students**`);
+
+                await interaction.sendEmbed(mySettingsEmbed);
                 break;
             };
 
@@ -109,6 +129,49 @@ const Link = new DiscordCommand({
                 break;
             };
 
+            case 'toggle_avatar': {
+                if (!FortyTwoSyncDB) {
+                    return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account yet... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                } else if (!FortyTwoSyncDB.verified) {
+                    return await interaction.sendEmbed(client.createEmbed('Please verify your account by checking your mails, if the 42 account you have specified is incorrect, please remove it by using the </link unlink:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                };
+
+                client.updateIntoDatabase('42/Sync', {avatarEnabled: Number(!FortyTwoSyncDB.avatarEnabled)}, {discordUserId: userId});
+
+                if (FortyTwoSyncDB.avatarEnabled) {
+                    client.updateIntoDatabase('42/Users', {image: client.defaultAvatar}, {userId: FortyTwoSyncDB.fortyTwoUserId});
+                };
+
+                await interaction.sendEmbed(client.createEmbed(`Your avatar on 42Wizard commands is now \`${FortyTwoSyncDB.avatarEnabled ? 'not visible' : 'visible'}\`! If it is now visible, you have to wait a few seconds to see it.`, {emote: 'hundred', type: 'success'}));
+                break;
+            };
+
+            case 'toggle_hidden': {
+                if (!FortyTwoSyncDB) {
+                    return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account yet... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                } else if (!FortyTwoSyncDB.verified) {
+                    return await interaction.sendEmbed(client.createEmbed('Please verify your account by checking your mails, if the 42 account you have specified is incorrect, please remove it by using the </link unlink:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                };
+
+                client.updateIntoDatabase('42/Sync', {hidden: Number(!FortyTwoSyncDB.hidden)}, {discordUserId: userId});
+
+                await interaction.sendEmbed(client.createEmbed(`Your are now \`${FortyTwoSyncDB.hidden ? 'hidden' : 'visible'}\` from the other students!`, {emote: 'hundred', type: 'success'}));
+                break;
+            };
+
+            case 'toggle_enabled': {
+                if (!FortyTwoSyncDB) {
+                    return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account yet... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                } else if (!FortyTwoSyncDB.verified) {
+                    return await interaction.sendEmbed(client.createEmbed('Please verify your account by checking your mails, if the 42 account you have specified is incorrect, please remove it by using the </link unlink:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
+                };
+
+                client.updateIntoDatabase('42/Sync', {hidden: Number(!FortyTwoSyncDB.enabled)}, {discordUserId: userId});
+
+                await interaction.sendEmbed(client.createEmbed(`The system is now \`${FortyTwoSyncDB.enabled ? 'disabled' : 'enabled'}\` on your account!`, {emote: 'hundred', type: 'success'}));
+                break;
+            };
+
             case 'unlink': {
                 if (!FortyTwoSyncDB) {
                     return await interaction.sendEmbed(client.createEmbed('You have not linked your 42 account with your Discord account... You can do it with the </link setup:1301665165615304745> command!', {emote: 'zero', type: 'warning'}));
@@ -132,8 +195,12 @@ const Link = new DiscordCommand({
 Link.data
     .addSubcommand((subcommand) => subcommand.setName('lock_system').setDescription('❓• Gives informations about how to setup the lock system.'))
     .addSubcommand((subcommand) => subcommand.setName('setup').setDescription('🔄️ • Links your Discord account with your 42 account.').addStringOption((option) => option.setName('login').setDescription('🆔 • Your 42 login.').setRequired(true)))
+    .addSubcommand((subcommand) => subcommand.setName('my_settings').setDescription('⚙️• Gives your 42Wizard settings.'))
     .addSubcommand((subcommand) => subcommand.setName('reset_auth_key').setDescription('🔁 • Resets your authentication key (For the lock system).'))
     .addSubcommand((subcommand) => subcommand.setName('toggle_mail').setDescription('✅/❌ • Enables or disables 42Wizard mails for your account.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_avatar').setDescription('✅/❌ • Enables or disables 42Wizard to show your avatar on its commands.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_hidden').setDescription('✅/❌ • Hide or show your account to the students.'))
+    .addSubcommand((subcommand) => subcommand.setName('toggle_enabled').setDescription('✅/❌ • Enables or disables the system on your account.'))
     .addSubcommand((subcommand) => subcommand.setName('unlink').setDescription('🗑️• Unlinks your Discord account with you 42 account.'));
 
 module.exports = Link;

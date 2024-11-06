@@ -45,6 +45,8 @@ CREATE TABLE Sync(
     dmChannelId TEXT NOT NULL,
     syncKey TEXT NOT NULL,
     mailEnabled INTEGER NOT NULL,
+    avatarEnabled INTEGER NOT NULL,
+    hidden INTEGER NOT NULL,
     verified INTEGER NOT NULL,
     syncedAt INTEGER NOT NULL
 );

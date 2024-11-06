@@ -35,7 +35,7 @@ async function initAPI(client) {
                 .setTitle('✅ You have successfully linked your Discord account to your 42 account')
                 .setThumbnail(userData.image)
                 .setDescription(`- Login: **[${userData.login}](https://profile.intra.42.fr/users/${userData.login})**`)
-                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged. If you want to disable them, please use the </link toggle_mail:1301665165615304745> command! To setup the lock system, please use the </link lock_system:1301665165615304745> command!'});
+                .addFields({name: '**Informations**', value: 'By default, you will receive mails when you are about to be deloggable or when you have been delogged. If you want to disable them, please use the </link toggle_mail:1301665165615304745> command!\n- To setup the lock system, please use the </link lock_system:1301665165615304745> command!\n- To allow other students to show your avatar, please use the </link toggle_avatar:1301665165615304745> command!\n- To be hidden from the other students, please use the </link toggle_hidden:1301665165615304745> command!\n- To disable the system, please use the </link toggle_enabled:1301665165615304745> command!'});
 
             await client.sendMessage(syncData.dmChannelId, syncEmbed);
             client.updateIntoDatabase('42/Sync', {syncKey: newSyncKey, verified: 1}, {syncKey});
@@ -43,8 +43,8 @@ async function initAPI(client) {
         });
 
         app.get('/getAwardedStudents', (_, res) => {
-            const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1});
-            const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => user.delogTimes || user.gotDeloggedTimes || syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId));
+            const syncedUsers = client.selectAllIntoDatabase('42/Sync', {verified: 1, enabled: 1, hidden: 0});
+            const UserDB = client.selectAllIntoDatabase('42/Users').filter((user) => (syncedUsers.find((syncedUser) => syncedUser.fortyTwoUserId === user.userId) && (user.delogTimes || user.gotDeloggedTimes)));
 
             if (!UserDB.length) {
                 return client.sendStatus(res, 401, {data: {message: 'Cannot find any 42 student to show.'}});
@@ -119,7 +119,7 @@ async function initAPI(client) {
             const LockSystemDB = client.selectIntoDatabase('42/LockSystem', {fortyTwoUserId});
             const now = Date.now();
     
-            if (status === 'locked') {
+            if (status === 'locked' && FortyTwoSyncDB.enabled) {
                 if (LockSystemDB && LockSystemDB.status === 'locked') {
                     return client.sendStatus(res, 401, {data: {message: 'This 42 student status is already locked.'}});
                 };
