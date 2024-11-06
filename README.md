@@ -54,6 +54,14 @@ Reponse format: `JSON`
 - **/link toggle_avatar**: If you don't want 42Wizard to store the link to your avatar (your photo), you can do it.
 - **/link toggle_hidden**: If you want to use 42Wizard but do not want to be visible from the other students (on find command or on the leaderboard), you can do it.
 
+## How the 42 data is used ?
+
+Every 42 seconds, 42Wizard scans all the clusters on the Paris campus, storing cluster informations (cluster ID, host name) as well as information about the user connected to the host (login and avatar (photo)). A student not connected to 42Wizard will have his avatar set to a default avatar (Stormtrooper from Star Wars). The same applies to a student who doesn't want his avatar to be visible. This information is then used to find out who is connected, when and where. These informations never leave the server and is stored internally, in SQL databases that never and will never leave the server.
+
+The commands in the "Settings" section allow you to make your own privacy choices.
+
+If you still have questions about this, feel free to read the source code or ask directly on Discord to (murasakinx, login 42: mel-habi).
+
 ## Disclaimer
 
 **⚠️ This tool isn't intended to promote delogging people, it's just for fun. If abuse is detected, the people involved will be banned from the system or the service will cease to exist. Please, don't abuse, be serious and respectful to your mates. ⚠️**
