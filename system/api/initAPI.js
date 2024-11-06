@@ -150,7 +150,9 @@ async function initAPI(client) {
                         unlockedAt: 0,
                         fiveMinutesReminded: 0
                     });
-                };           
+                };
+            } else if (status !== 'unlocked' && !FortyTwoSyncDB.enabled) {
+                return client.sendStatus(res, 401, {data: {message: 'This 42 student has disabled the system on his account.'}});
             } else {
                 if (LockSystemDB && LockSystemDB.status === 'unlocked') {
                     return client.sendStatus(res, 401, {data: {message: 'This 42 student status is already unlocked.'}});
@@ -167,7 +169,7 @@ async function initAPI(client) {
                 };
             };
     
-            return client.sendStatus(res, 200, {data: {message: 'OK!'}});
+            return client.sendStatus(res, 200, {data: {message: `The status of this 42 student has been successfully changed to ${status}!`}});
         });
     
         app.all('*', (req, res) => {
