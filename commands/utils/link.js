@@ -179,7 +179,7 @@ const Link = new DiscordCommand({
 
                 const validationEmbed = client.baseEmbed()
                     .setTitle('🗑️ Link to a 42 account deletion request')
-                    .setDescription('You will be able to link your Discord account with a 42 account and your authentication key will be deleted.');
+                    .setDescription('If you remove the link between your Discord account and your 42 account, you will no longer have access to my commands, the lock system will be disabled as your authentication key will be deleted and your avatar will be hidden. You will, of course, be allowed to link a 42 account with your Discord account again by using the </link setup:1301665165615304745> command.');
         
                 const validation = await client.createValidation(interaction, validationEmbed, 'Do you really want to unlink your Discord account with your 42 account ?');
                 if (!validation) return;
