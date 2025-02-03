@@ -33,7 +33,7 @@ async function functions(client) {
 
     client.splitArrayByParts = (array, parts=10) => {
         const result = [[]];
-    
+
         for (const element of array) {
           const lastPart = result.at(-1);
           if (lastPart.length === parts) {
@@ -42,7 +42,7 @@ async function functions(client) {
             lastPart.push(element);
           };
         };
-    
+
         return result;
     };
 
@@ -102,11 +102,12 @@ async function functions(client) {
           }
         });
 
-        const jsonData = await data.json();
         if (!data.ok) {
           console.error(`❌ Erreur avec la fonction getParisCampusLocations: ${jsonData.message}.`);
           break;
         };
+
+        const jsonData = await data.json();
 
         for (const {id, host, user} of jsonData) {
           const [bat] = host.split('-');
