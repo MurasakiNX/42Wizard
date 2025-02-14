@@ -1,6 +1,8 @@
+# THIS PROJECT HAS BEEN SET AS READ-ONLY, 42Wizard WILL NO LONGER WORK FROM NOW. ALL DATABASES WILL BE DELETED.
+
 # 42Wizard
 
-**42Wizard** is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord (and mail if enabled) when they are about to be deloggable. 
+**42Wizard** is a Discord BOT developed for 42 students at Paris. It helps students to check user connections (lock) and sends notifications via Discord (and mail if enabled) when they are about to be deloggable.
 
 ## Functionnalities
 
